@@ -1,0 +1,265 @@
+﻿%\documentclass[$if(fontsize)$$fontsize$,$endif$$if(lang)$$lang$,$endif$$if(papersize)$$papersize$,$endif$$for(classoption)$$classoption$$sep$,$endfor$]{$documentclass$}
+\documentclass[10pt, a4paper]{scrartcl}
+$if(fontfamily)$
+\usepackage{$fontfamily$}
+$else$
+\usepackage{pgfplots}
+\usepackage{tikz} 
+\usepackage{lmodern}
+\usepackage{pgfplots}
+\usepackage{tikz} 
+$endif$
+$if(linestretch)$
+\usepackage{setspace}
+\setstretch{$linestretch$}
+$endif$
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\usepackage{fixltx2e} % provides \textsubscript
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+$if(euro)$
+  \usepackage{eurosym}
+$endif$
+\else % if luatex or xelatex
+  \ifxetex
+    %\usepackage{mathspec}
+    % \usepackage{mathspec}
+    %\usepackage{xltxtra,xunicode}
+    %\setmainfont{GOST_B.ttf}
+    %\setmainfont{Times New Roman} % Главный шрифт
+    %\newfontfamily{\cyrillicfonttt}{GOST_B.ttf} %GOST type B
+    %\setmainfont[
+%BoldFont = PT_Sans-Bold.ttf,
+%ItalicFont = PT_Sans-Italic.ttf,
+%BoldItalicFont = PT_Sans-BoldItalic.ttf
+%]{PT_Sans-Regular.ttf}
+    %\newfontfamily{\cyrillicfonttt}{PT Sans} % Использовать его для кириллицы
+    %\setmonofont{Courier New} % Монохромный шрифт
+    %\setromanfont{OpenGost Type B TT}
+    %\setmainfont{GOST type B}
+    %\setmonofont{GOST type B}
+    %\usepackage{polyglossia} % Пакет с поддержкой многих языков, в том числе и русского
+    %\newfontfamily{\cyrillicfonttt}{OpenGost Type B TT}
+    %\newfontfamily{\cyrillicfontt}{OpenGost Type B TT}
+    %\newfontfamily{\cyrillicfont}{OpenGost Type B TT}
+    %\setmainlanguage{russian} % Основной язык документа
+    %\setotherlanguage{english} % Дополнительный шрифт документа
+    %\usepackage[left=3.5cm,right=1.5cm,top=1.5cm,bottom=2cm]{geometry} % поля страницы
+    \usepackage{xltxtra,fontspec,xunicode}
+    % \setromanfont[Numbers=Uppercase]{OpenGost Type B TT}
+    % \setmonofont[Scale=0.90,Ligatures=NoCommon]{OpenGost Type A TT}
+    \setromanfont[Numbers=Uppercase]{GOST type B}
+    \setmonofont[Scale=0.90,Ligatures=NoCommon]{GOST type B}
+    \DeclareMathSizes{6}{5}{4}{4}
+  \else
+    \usepackage{fontspec}
+  \fi
+  \defaultfontfeatures{Mapping=tex-text,Scale=MatchLowercase}
+  \newcommand{\euro}{¦-тАЪTм}
+$if(mainfont)$
+    \setmainfont{$mainfont$}
+$endif$
+$if(sansfont)$
+    \setsansfont{$sansfont$}
+$endif$
+$if(monofont)$
+    \setmonofont[Mapping=tex-ansi]{$monofont$}
+$endif$
+$if(mathfont)$
+    \setmathfont(Digits,Latin,Greek){$mathfont$}
+$endif$
+\fi
+% use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+% use microtype if available
+\IfFileExists{microtype.sty}{%
+\usepackage{microtype}
+\UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+$if(geometry)$
+\usepackage[$for(geometry)$$geometry$$sep$,$endfor$]{geometry}
+$endif$
+$if(natbib)$
+\usepackage{natbib}
+\bibliographystyle{$if(biblio-style)$$biblio-style$$else$plainnat$endif$}
+$endif$
+$if(biblatex)$
+\usepackage{biblatex}
+$if(biblio-files)$
+\bibliography{$biblio-files$}
+$endif$
+$endif$
+$if(listings)$
+\usepackage{listings}
+$endif$
+$if(lhs)$
+\lstnewenvironment{code}{\lstset{language=Haskell,basicstyle=\small\ttfamily}}{}
+$endif$
+$if(highlighting-macros)$
+$highlighting-macros$
+$endif$
+$if(verbatim-in-note)$
+\usepackage{fancyvrb}
+$endif$
+$if(tables)$
+\usepackage{longtable,booktabs}
+$endif$
+$if(graphics)$
+\usepackage{graphicx}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+$endif$
+\ifxetex
+  \usepackage[setpagesize=false, % page size defined by xetex
+              unicode=false, % unicode breaks when used with xetex
+              xetex]{hyperref}
+\else
+  \usepackage[unicode=true]{hyperref}
+\fi
+\hypersetup{breaklinks=true,
+            bookmarks=true,
+            pdfauthor={$author-meta$},
+            pdftitle={$title-meta$},
+            colorlinks=true,
+            citecolor=$if(citecolor)$$citecolor$$else$blue$endif$,
+            urlcolor=$if(urlcolor)$$urlcolor$$else$blue$endif$,
+            linkcolor=$if(linkcolor)$$linkcolor$$else$magenta$endif$,
+            pdfborder={0 0 0}}
+\urlstyle{same}  % don't use monospace font for urls
+$if(links-as-notes)$
+% Make links footnotes instead of hotlinks:
+%\renewcommand{\href}[2]{#2\footnote{\url{#1}}}
+$endif$
+$if(strikeout)$
+\usepackage[normalem]{ulem}
+% avoid problems with \sout in headers with hyperref:
+\pdfstringdefDisableCommands{\renewcommand{\sout}{}}
+$endif$
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt plus 2pt minus 1pt}
+\setlength{\emergencystretch}{3em}  % prevent overfull lines
+$if(numbersections)$
+\setcounter{secnumdepth}{5}
+$else$
+\setcounter{secnumdepth}{0}
+$endif$
+$if(verbatim-in-note)$
+%\VerbatimFootnotes % allows verbatim text in footnotes
+$endif$
+$if(lang)$
+% \ifxetex
+%   \usepackage{polyglossia}
+%   \setmainlanguage{$mainlang$}
+% \else
+%   \usepackage[$lang$]{babel}
+% \fi
+$endif$
+
+$if(title)$
+\title{$title$$if(subtitle)$\\\vspace{0.5em}{\large $subtitle$}$endif$}
+$endif$
+$if(author)$
+\author{$for(author)$$author$$sep$ \and $endfor$}
+$endif$
+\date{$date$}
+$for(header-includes)$
+$header-includes$
+$endfor$
+
+\usepackage[left=0cm,right=0cm,top=0cm,bottom=0cm]{geometry}
+\textwidth=160mm
+\textheight=260mm
+%\oddsidemargin=-.4mm
+\oddsidemargin=5mm
+\headsep=5mm
+
+\topmargin=-26.4mm%%-1in-1mm = (-25.4)-1 для HP, для других = 1in
+\unitlength=1mm
+
+% :::::::::::::::::: РАМКА
+% \def\VL{\line(0,1){15}}
+% \def\HL{\line(1,0){184}}
+% \def\Box#1#2{\makebox(#1,5){#2}}
+% \def\simpleGrad{\sl\small\noindent\hbox to 0pt{%
+% \vbox to 0pt{%
+% \noindent\begin{picture}(184,287)(10,0)% для HP, для других = (185,287)(3,0)
+% \linethickness{0.3mm}
+% \put(0,0){\framebox(184,287){}} % для HP, для других =(185,287)
+% \put(0,0){\Box{7}{Лит.}}
+% \put(0, 15){\line(1,0){184}}
+% \multiput(0, 5)(0, 5){2}{\line(1,0){65}}
+% \put(7, 0){\VL\Box{10}{Изм.}}
+% \put(17, 0){\VL\Box{23}{\textnumero докум.}}
+% \put(40, 0){\VL\Box{15}{Подп.}}
+% \put(55, 0){\VL\Box{10}{Дата}}
+% \put(65, 0){\VL\makebox(110,15){\large\sc\rightmark}}% для HP, для других =110
+% \put(174, 0){\VL\makebox(10,10){\normalsize\thepage}}% для HP, для других =175
+% \put(174,10){\line(1,0){10}} % для HP, для других =175
+% \end{picture}
+% }}}
+% \makeatletter
+% \def\@oddhead{\simpleGrad}
+% \def\@oddfoot{}
+% \makeatother
+% ::::::::::::::::::::РАМКА
+\pagenumbering{gobble} % Убрать номера со страниц
+
+\begin{document}
+$if(title)$
+\maketitle
+$endif$
+$if(abstract)$
+\begin{abstract}
+$abstract$
+\end{abstract}
+$endif$
+
+$for(include-before)$
+$include-before$
+
+$endfor$
+$if(toc)$
+{
+\hypersetup{linkcolor=black}
+\setcounter{tocdepth}{$toc-depth$}
+\tableofcontents
+}
+$endif$
+$if(lot)$
+\listoftables
+$endif$
+$if(lof)$
+\listoffigures
+$endif$
+$body$
+
+$if(natbib)$
+$if(biblio-files)$
+$if(biblio-title)$
+$if(book-class)$
+\renewcommand\bibname{$biblio-title$}
+$else$
+\renewcommand\refname{$biblio-title$}
+$endif$
+$endif$
+\bibliography{$biblio-files$}
+
+$endif$
+$endif$
+$if(biblatex)$
+\printbibliography$if(biblio-title)$[title=$biblio-title$]$endif$
+
+$endif$
+$for(include-after)$
+$include-after$
+
+$endfor$
+\end{document}

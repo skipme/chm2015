@@ -1,0 +1,1780 @@
+%\documentclass[]{article}
+\documentclass[10pt, a4paper]{scrartcl}
+\usepackage{pgfplots}
+\usepackage{tikz} 
+\usepackage{lmodern}
+\usepackage{pgfplots}
+\usepackage{tikz} 
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\usepackage{fixltx2e} % provides \textsubscript
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+\else % if luatex or xelatex
+  \ifxetex
+    %\usepackage{mathspec}
+    % \usepackage{mathspec}
+    %\usepackage{xltxtra,xunicode}
+    %\setmainfont{GOST_B.ttf}
+    %\setmainfont{Times New Roman} % Главный шрифт
+    %\newfontfamily{\cyrillicfonttt}{GOST_B.ttf} %GOST type B
+    %\setmainfont[
+%BoldFont = PT_Sans-Bold.ttf,
+%ItalicFont = PT_Sans-Italic.ttf,
+%BoldItalicFont = PT_Sans-BoldItalic.ttf
+%]{PT_Sans-Regular.ttf}
+    %\newfontfamily{\cyrillicfonttt}{PT Sans} % Использовать его для кириллицы
+    %\setmonofont{Courier New} % Монохромный шрифт
+    %\setromanfont{OpenGost Type B TT}
+    %\setmainfont{GOST type B}
+    %\setmonofont{GOST type B}
+    %\usepackage{polyglossia} % Пакет с поддержкой многих языков, в том числе и русского
+    %\newfontfamily{\cyrillicfonttt}{OpenGost Type B TT}
+    %\newfontfamily{\cyrillicfontt}{OpenGost Type B TT}
+    %\newfontfamily{\cyrillicfont}{OpenGost Type B TT}
+    %\setmainlanguage{russian} % Основной язык документа
+    %\setotherlanguage{english} % Дополнительный шрифт документа
+    %\usepackage[left=3.5cm,right=1.5cm,top=1.5cm,bottom=2cm]{geometry} % поля страницы
+    \usepackage{xltxtra,fontspec,xunicode}
+    % \setromanfont[Numbers=Uppercase]{OpenGost Type B TT}
+    % \setmonofont[Scale=0.90,Ligatures=NoCommon]{OpenGost Type A TT}
+    \setromanfont[Numbers=Uppercase]{GOST type B}
+    \setmonofont[Scale=0.90,Ligatures=NoCommon]{GOST type B}
+    \DeclareMathSizes{6}{5}{4}{4}
+  \else
+    \usepackage{fontspec}
+  \fi
+  \defaultfontfeatures{Mapping=tex-text,Scale=MatchLowercase}
+  \newcommand{\euro}{¦-тАЪTм}
+\fi
+% use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+% use microtype if available
+\IfFileExists{microtype.sty}{%
+\usepackage{microtype}
+\UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\ifxetex
+  \usepackage[setpagesize=false, % page size defined by xetex
+              unicode=false, % unicode breaks when used with xetex
+              xetex]{hyperref}
+\else
+  \usepackage[unicode=true]{hyperref}
+\fi
+\hypersetup{breaklinks=true,
+            bookmarks=true,
+            pdfauthor={},
+            pdftitle={},
+            colorlinks=true,
+            citecolor=blue,
+            urlcolor=blue,
+            linkcolor=magenta,
+            pdfborder={0 0 0}}
+\urlstyle{same}  % don't use monospace font for urls
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt plus 2pt minus 1pt}
+\setlength{\emergencystretch}{3em}  % prevent overfull lines
+\setcounter{secnumdepth}{0}
+
+\date{}
+
+\usepackage[left=0cm,right=0cm,top=0cm,bottom=0cm]{geometry}
+\textwidth=160mm
+\textheight=260mm
+%\oddsidemargin=-.4mm
+\oddsidemargin=5mm
+\headsep=5mm
+
+\topmargin=-26.4mm%%-1in-1mm = (-25.4)-1 для HP, для других = 1in
+\unitlength=1mm
+
+% :::::::::::::::::: РАМКА
+% \def\VL{\line(0,1){15}}
+% \def\HL{\line(1,0){184}}
+% \def\Box#1#2{\makebox(#1,5){#2}}
+% \def\simpleGrad{\sl\small\noindent\hbox to 0pt{%
+% \vbox to 0pt{%
+% \noindent\begin{picture}(184,287)(10,0)% для HP, для других = (185,287)(3,0)
+% \linethickness{0.3mm}
+% \put(0,0){\framebox(184,287){}} % для HP, для других =(185,287)
+% \put(0,0){\Box{7}{Лит.}}
+% \put(0, 15){\line(1,0){184}}
+% \multiput(0, 5)(0, 5){2}{\line(1,0){65}}
+% \put(7, 0){\VL\Box{10}{Изм.}}
+% \put(17, 0){\VL\Box{23}{\textnumero докум.}}
+% \put(40, 0){\VL\Box{15}{Подп.}}
+% \put(55, 0){\VL\Box{10}{Дата}}
+% \put(65, 0){\VL\makebox(110,15){\large\sc\rightmark}}% для HP, для других =110
+% \put(174, 0){\VL\makebox(10,10){\normalsize\thepage}}% для HP, для других =175
+% \put(174,10){\line(1,0){10}} % для HP, для других =175
+% \end{picture}
+% }}}
+% \makeatletter
+% \def\@oddhead{\simpleGrad}
+% \def\@oddfoot{}
+% \makeatother
+% ::::::::::::::::::::РАМКА
+\pagenumbering{gobble} % Убрать номера со страниц
+
+\begin{document}
+
+1.1 Методом Гаусса решить системы линейных алгебраических уравнений
+(СЛАУ). Для матрицы СЛАУ вычислить определитель и обратную матрицу.
+
+\[\begin{cases}
+-x_1 - 3x_2 - 4x_3 = -3\\
+3x_1 + 7x_2 - 8x_3 + 3x_4 = 30\\
+x_1 - 6x_2 + 2x_3 + 5x_4 = -90\\
+-8x_1 - 4x_2 - x_3 - x_4 = 12\\
+\end{cases}\]
+
+В матричной форме эта система выглядит как
+\(A \overline{x}=\overline{b}\),
+\(А=\{ a_{ij}\}, \overline{x}=(x_1,x_2,\dots ,x_n)^T, \overline{b}= (b_1, b_2, \dots , b_n)^T\).
+Задача имеет единственное решение, если определитель (детерминант)
+матрицы системы не равен нулю ( \(\|A\|\neq 0\) или
+\(\mathrm{det} A \neq 0\)). Метод Гаусса заключается в исключении из
+системы тех слагаемых, которые лежат в матрице А ниже главной диагонали
+(\(a_{ij}, i>j\)). Исключать слагаемые разрешается только с помощью трёх
+допустимых преобразований:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi})}
+\item
+  любую строку ( уравнение ) можно умножить ( разделить ) на любое
+  число, кроме нуля:
+\item
+  любую строку можно прибавить к другой строке;
+\item
+  можно переставить любые две строки.
+\end{enumerate}
+
+При каждом применении третьего преобразования определитель будет менять
+свой знак.
+
+\[\widetilde{A} = \begin{pmatrix} 
+-1 & -3 & -4 & 0 & -3\\
+3 & 7 & -8 & 3 & 30\\
+1 & -6 & 2 & 5 & -90\\
+-8 & -4 & -1 & -1 & 12\\
+\end{pmatrix}\] \[(\widetilde{A}E) = \begin{pmatrix} 
+-1 & -3 & -4 & 0 & -3 & 1 & 0 & 0 & 0\\
+3 & 7 & -8 & 3 & 30 & 0 & 1 & 0 & 0\\
+1 & -6 & 2 & 5 & -90 & 0 & 0 & 1 & 0\\
+-8 & -4 & -1 & -1 & 12 & 0 & 0 & 0 & 1\\
+\end{pmatrix}\] Операции над строками будем выписывать обозначая номера
+строк матрицы римскими цифрами:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi})}
+\itemsep1pt\parskip0pt\parsep0pt
+\item
+  \uppercase\expandafter{\romannumeral2} =
+  \uppercase\expandafter{\romannumeral2} + 3 \(\cdot\)
+  \uppercase\expandafter{\romannumeral1};
+  \uppercase\expandafter{\romannumeral3} =
+  \uppercase\expandafter{\romannumeral3} +
+  \uppercase\expandafter{\romannumeral1};
+  \uppercase\expandafter{\romannumeral4} =
+  \uppercase\expandafter{\romannumeral4}\(- 8 \cdot\)
+  \uppercase\expandafter{\romannumeral1}
+\end{enumerate}
+
+\(\displaystyle (\widetilde{A}E) \sim \begin{pmatrix} -1 & -3 & -4 & 0 & -3 & 1 & 0 & 0 & 0\\ 0 & -2 & -20 & 3 & 21 & 3 & 1 & 0 & 0\\ 0 & -9 & -2 & 5 & -93 & 1 & 0 & 1 & 0\\ 0 & 20 & 31 & -1 & 36 & -8 & 0 & 0 & 1\\ \end{pmatrix}\)
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi})}
+\setcounter{enumi}{1}
+\itemsep1pt\parskip0pt\parsep0pt
+\item
+  \uppercase\expandafter{\romannumeral3} =
+  \uppercase\expandafter{\romannumeral3} \(- \frac{9}{2} \cdot\)
+  \uppercase\expandafter{\romannumeral2};
+  \uppercase\expandafter{\romannumeral4} =
+  \uppercase\expandafter{\romannumeral4} +
+  \(10 \cdot\)\uppercase\expandafter{\romannumeral1}
+\end{enumerate}
+
+\(\displaystyle (\widetilde{A}E) \sim \begin{pmatrix} -1 & -3 & -4 & 0 & -3 & 1 & 0 & 0 & 0\\ 0 & -2 & -20 & 3 & 21 & 3 & 1 & 0 & 0\\ 0 & 0 & 88 & -8.5 & -187.5 & -12.5 & -4.5 & 1 & 0\\ 0 & 0 & -169 & 29 & 246 & 22 & 10 & 0 & 1\\ \end{pmatrix}\)
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi})}
+\setcounter{enumi}{2}
+\itemsep1pt\parskip0pt\parsep0pt
+\item
+  \uppercase\expandafter{\romannumeral4} =
+  \uppercase\expandafter{\romannumeral4} +
+  \(\frac{169}{88} \cdot\)\uppercase\expandafter{\romannumeral3}
+\end{enumerate}
+
+\(\displaystyle (\widetilde{A}E) \sim \begin{pmatrix} -1 & -3 & -4 & 0 & -3 & 1 & 0 & 0 & 0\\ 0 & -2 & -20 & 3 & 21 & 3 & 1 & 0 & 0\\ 0 & 0 & 88 & -8.5 & -187.5 & -12.5 & -4.5 & 1 & 0\\ 0 & 0 & 0 & 12.6761 & -114.0852 & -2.0057 & 1.358 & 1.9205 & 1\\ \end{pmatrix}\)
+
+\pagebreak
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi})}
+\setcounter{enumi}{3}
+\itemsep1pt\parskip0pt\parsep0pt
+\item
+  Образуем единицы на главной диагонали.
+  \uppercase\expandafter{\romannumeral1} =
+  \uppercase\expandafter{\romannumeral1}/-1;
+  \uppercase\expandafter{\romannumeral2} =
+  \uppercase\expandafter{\romannumeral2}/-2;
+  \uppercase\expandafter{\romannumeral4} =
+  \uppercase\expandafter{\romannumeral4}/12.6761
+\end{enumerate}
+
+\(\displaystyle (\widetilde{A}E) \sim \begin{pmatrix} 1 & 3 & 4 & 0 & 3 & -1 & 0 & 0 & 0\\ 0 & 1 & 10 & -1.5 & -10.5 & -1.5 & -0.5 & 0 & 0\\ 0 & 0 & 1 & -0.0966 & -2.1307 & -0.142 & -0.0511 & 0.0114 & 0\\ 0 & 0 & 0 & 1 & -9 & -0.1582 & 0.1071 & 0.1515 & 0.0789\\ \end{pmatrix}\)
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi})}
+\setcounter{enumi}{4}
+\itemsep1pt\parskip0pt\parsep0pt
+\item
+  \uppercase\expandafter{\romannumeral2} =
+  \uppercase\expandafter{\romannumeral2} + 1.5 \(\cdot\)
+  \uppercase\expandafter{\romannumeral4};
+  \uppercase\expandafter{\romannumeral3} =
+  \uppercase\expandafter{\romannumeral3} +
+  \(0.0966 \cdot\)\uppercase\expandafter{\romannumeral4};
+  \uppercase\expandafter{\romannumeral1} - без изменений
+\end{enumerate}
+
+\(\displaystyle (\widetilde{A}E) \sim \begin{pmatrix} 1 & 3 & 4 & 0 & 3 & -1 & 0 & 0 & 0\\ 0 & 1 & 10 & 0 & -24 & -1.7373 & -0.3394 & 0.2273 & 0.1184\\ 0 & 0 & 1 & 0 & -3.001 & -0.1573 & -0.0408 & 0.026 & 0.0076\\ 0 & 0 & 0 & 1 & -9 & -0.1582 & 0.1071 & 0.1515 & 0.0789\\ \end{pmatrix}\)
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi})}
+\setcounter{enumi}{5}
+\itemsep1pt\parskip0pt\parsep0pt
+\item
+  \uppercase\expandafter{\romannumeral2} =
+  \uppercase\expandafter{\romannumeral2}\(- 10 \cdot\)
+  \uppercase\expandafter{\romannumeral3};
+  \uppercase\expandafter{\romannumeral1} =
+  \uppercase\expandafter{\romannumeral1}
+  \(- 4 \cdot\)\uppercase\expandafter{\romannumeral3}
+\end{enumerate}
+
+\(\displaystyle (\widetilde{A}E) \sim \begin{pmatrix} 1 & 3 & 0 & 0 & 15.004 & -0.3708 & 0.1632 & -0.104 & -0.0304\\ 0 & 1 & 0 & 0 & 6.01 & -0.1643 & 0.0686 & 0.0327 & 0.0424\\ 0 & 0 & 1 & 0 & -3.001 & -0.1573 & -0.0408 & 0.026 & 0.0076\\ 0 & 0 & 0 & 1 & -9 & -0.1582 & 0.1071 & 0.1515 & 0.0789\\ \end{pmatrix}\)
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi})}
+\setcounter{enumi}{6}
+\itemsep1pt\parskip0pt\parsep0pt
+\item
+  \uppercase\expandafter{\romannumeral1} =
+  \uppercase\expandafter{\romannumeral1}
+  \(- 3 \cdot\)\uppercase\expandafter{\romannumeral2}
+\end{enumerate}
+
+\(\displaystyle (\widetilde{A}E) \sim \begin{pmatrix} 1 & 0 & 0 & 0 & -3.026 & 0.1221 & -0.0426 & -0.0059 & -0.1576\\ 0 & 1 & 0 & 0 & 6.01 & -0.1643 & 0.0686 & 0.0327 & 0.0424\\ 0 & 0 & 1 & 0 & -3.001 & -0.1573 & -0.0408 & 0.026 & 0.0076\\ 0 & 0 & 0 & 1 & -9 & -0.1582 & 0.1071 & 0.1515 & 0.0789\\ \end{pmatrix}\)
+
+Выпишем образованные в пятом столбце корни:
+
+\[\begin{cases}
+x_1 = -3.026 \approx -3\\
+x_2 = 6.01 \approx 6\\
+x_3 = -3.001 \approx -3\\
+x_4 = -9 \approx -9\\
+\end{cases}\] \vspace{5mm} Определитель равен произведению коэффициентов
+4 шага:
+
+\(\Delta = -1 \cdot -2 \cdot 88 \cdot 12.6761 = 2230.9936 \approx 2231\)
+
+Выпишем образованную из единичной - обратную матрицу системы:
+
+\[A^{-1} \sim \begin{pmatrix} 
+0.1221 & -0.0426 & -0.0059 & -0.1576\\
+-0.1643 & 0.0686 & 0.0327 & 0.0424\\
+-0.1573 & -0.0408 & 0.026 & 0.0076\\
+-0.1582 & 0.1071 & 0.1515 & 0.0789\\
+\end{pmatrix}\] Проверка (результат произведения матрицы системы и её
+обратной дают единичную): \[(A \cdot A^{-1}) \sim \begin{pmatrix} 
+1.005 & 0.0013 & -0.0018 & 0.0003\\
+-0.0018 & 0.9997 & 0.0006 & -0.0001\\
+0.0001 & -0.0001 & 1 & 0\\
+-0.0002 & -0.0003 & 0.0001 & 0.9999\\
+\end{pmatrix}\] Ответ: x\textsubscript{1} = -3, x\textsubscript{2} = 6,
+x\textsubscript{3} = -3, x\textsubscript{4} = -9
+
+\pagebreak
+
+1.2 Методом прогонки решить СЛАУ.
+
+\[\begin{cases}
+-x_1 - x_2 = -4\\
+7x_1 - 17x_2 - 8x_3 = 132\\
+-9x_2 + 19x_3 + 8x_4 = -59\\
+7x_3 - 20x_4 + 4x_5 = -193\\
+-4x_4 + 12x_5 = -40\\
+\end{cases}\] Выпишем 3-х диагональную матрицу \(A_{n,n+1}\).
+
+\[\widetilde{A} = \begin{pmatrix} 
+-1 & -1 & 0 & 0 & 0 & -4\\
+7 & -17 & -8 & 0 & 0 & 132\\
+0 & -9 & 19 & 8 & 0 & -59\\
+0 & 0 & 7 & -20 & 4 & -193\\
+0 & 0 & 0 & -4 & 12 & -40\\
+\end{pmatrix}\]
+\(\displaystyle a_i = A_{i, i-1}; b_i = A_{i, i}; c_i = A_{i, i+1}; d_i = A_{i,n+1}; a_1 = 0; c_n = 0\)
+
+При проведении прямого хода метода прогонки вычисляются прогоночные
+коэффициенты A\textsubscript{i} и B\textsubscript{i}:
+
+\(\displaystyle A_i = \frac{-c_i}{b_i + a_i \cdot A_{i-1}}, B_i = \frac{d_i - a_i \cdot B_{i-1}}{b_i + a_i \cdot A_{i-1}}, A_0 = B_0 = 0\)
+
+В обратном ходе прогонки вычисляют все неизвестные: x\textsubscript{n},
+x\textsubscript{n-1}, \ldots{} x\textsubscript{1} .
+
+\(\displaystyle x_n = B_n, x_i = A_i \cdot x_{i+1} + B_i\)
+
+Прямой ход.
+
+\(\underline{k = 1}: a_1 = 0; b_1 = -1; c_1 = -1; d_1 = -4;\)
+
+\(\displaystyle \mathbf{A_1} = \frac{-c_1}{b_1} = \frac{1}{-1} = -1;\)
+\(\displaystyle \mathbf{B_1} = \frac{d_1}{b_1} = \frac{-4}{-1} = 4\)
+
+\(\underline{k = 2}: a_2 = 7; b_2 = -17; c_2 = -8; d_2 = 132;\)
+
+\(\displaystyle \mathbf{A_2} = \frac{-c_2}{b_2 + a_2\cdot A_1} = \frac{8}{-17+7\cdot(-1)} = \frac{8}{-24} = -\frac{1}{3};\)
+\(\displaystyle \mathbf{B_2} = \frac{d_2 - a_2\cdot B_1}{b_2 + a_2\cdot A_1} = \frac{132-7\cdot 4}{-17+7\cdot (-1)} = \frac{104}{-24} = -\frac{13}{3}\)
+
+\(\underline{k = 3}: a_3 = -9; b_3 = 19; c_3 = 8; d_3 = -59;\)
+
+\(\displaystyle \mathbf{A_3} = \frac{-c_3}{b_3 + a_3\cdot A_2} = \frac{-8}{19+(-9)\cdot (-\frac{1}{3})} = -\frac{4}{11};\)
+\(\displaystyle \mathbf{B_3} = \frac{d_3 - a_3\cdot B_2}{b_3 + a_3\cdot A_2} = \frac{-59-(-9)\cdot (-\frac{13}{3})}{19+(-9)\cdot (-\frac{1}{3})} = -\frac{49}{11};\)
+
+\(\underline{k = 4}: a_4 = 7; b_4 = -20; c_4 = 4; d_4 = -193;\)
+
+\(\displaystyle \mathbf{A_4} = \frac{-c_4}{b_4 + a_4\cdot A_3} = \frac{-4}{20+7\cdot (-\frac{4}{11})} = \frac{11}{62};\)
+\(\displaystyle \mathbf{B_4} = \frac{d_4 - a_4\cdot B_3}{b_4 + a_4\cdot A_3} = \frac{-193-7\cdot (-\frac{49}{11})}{-20+7\cdot (-\frac{4}{11})} = \frac{445}{62};\)
+
+\(\underline{k = 5}: a_5 = -4; b_5 = 12; c_5 = 0; d_5 = -40;\)
+
+\(\displaystyle \mathbf{A_5} = 0;\)
+\(\displaystyle \mathbf{B_5} = \frac{d_5 - a_5\cdot B_4}{b_5 + a_5\cdot A_4} = \frac{-40-(-4)\cdot (-\frac{445}{62})}{12+(-4)\cdot \frac{11}{62}} = -1;\)
+
+\(\displaystyle \underline{x_5 = -1}\)
+
+Обратный ход.
+
+\(\displaystyle x_4 = A_4\cdot x_5 + B_4 = \frac{11}{62}\cdot(-1) + \frac{445}{62} = 7\)
+\(\displaystyle x_3 = A_3\cdot x_4 + B_3 = -\frac{4}{1}\cdot7 + (-\frac{49}{11}) = -7\)
+
+\(\displaystyle x_2 = A_2\cdot x_3 + B_2 = -\frac{1}{3}\cdot-7 + (-\frac{13}{3}) = -2\)
+\(\displaystyle x_1 = A_1\cdot x_2 + B_1 = -1\cdot(-2) + 4 = 6\)
+
+\textbf{Ответ}: x\textsubscript{1} = 6; x\textsubscript{2} = -2;
+x\textsubscript{3} = -7; x\textsubscript{4} = 7; x\textsubscript{5} = -1
+
+\pagebreak
+
+1.3 Методом простых итераций и методом Зейделя решить СЛАУ с точностью
+\(\varepsilon = 0.01\) .
+
+\[\begin{cases}
+-22x_1 - 2x_2 - 6x_3 + 6x_4 = 96\\
+3x_1 - 17x_2 - 3x_3 + 7x_4 = -26\\
+2x_1 + 6x_2 - 17x_3 + 5x_4 = 35\\
+-x_1 - 8x_2 + 8x_3 + 23x_4 = -234\\
+\end{cases}\] Для решения системы \(A\overline{x} = \overline{b}\)
+каким-либо образом преобразуем эту систему к виду (схеме)
+\(\overline{x} = B\overline{x} + \overline{\gamma}\). По этой схеме
+можно построить итерационный процесс :
+
+\[\overline{x}^{(n+1)} = B \overline{x}^{(n)} + \overline{\gamma}\]
+
+В левой части стоит новый вектор неизвестных \(\overline{x}^{(n+1)}\), а
+в правой части - старый вектор неизвестных \(\overline{x}^{(n)}\). После
+вычисления нового вектора он превращается в старый и вычисляем следующий
+новый вектор. За начальный вектор \(\overline{x}^{(1)}\) можно взять
+вектор \(\overline{\gamma}\). Если хотя бы какая-нибудь норма матрицы B
+окажется меньше 1, то последовательность векторов \(\overline{x}^{(n)}\)
+из будет сходиться к точному решению. Сходимость будет тем быстрее, чем
+меньше норма у матрицы B. \[A = \begin{pmatrix} 
+-22 & -2 & -6 & 6\\
+3 & -17 & -3 & 7\\
+2 & 6 & -17 & 5\\
+-1 & -8 & 8 & 23\\
+\end{pmatrix}\]
+\(\displaystyle \overline{x} = \begin{pmatrix} x_1\\ x_2\\ x_3\\ x_4\\ \end{pmatrix}\)
+\(\displaystyle \overline{\beta} = \begin{pmatrix} 96\\ -26\\ 35\\ -234\\ \end{pmatrix}\)
+\[\begin{cases}
+x_1 = -0.0909x_2 - 0.2727x_3 + 0.2727x_4 - 4.3636\\
+x_2 = 0.1765x_1 - 0.1765x_3 + 0.4118x_4 + 1.5294\\
+x_3 = 0.1176x_1 + 0.3529x_2 + 0.2941x_4 - 2.0588\\
+x_4 = 0.0435x_1 + 0.3478x_2 - 0.3478x_3 - 10.1739\\
+\end{cases}\]
+
+\(\displaystyle B = \begin{pmatrix} 0 & -0.0909 & -0.2727 & 0.2727\\ 0.1765 & 0 & -0.1765 & 0.4118\\ 0.1176 & 0.3529 & 0 & 0.2941\\ 0.0435 & 0.3478 & -0.3478 & 0\\ \end{pmatrix};\)
+\(\displaystyle \parallel \overline{B} \parallel _1 = 0.7648;\)
+\(\displaystyle \overline{\gamma} = \begin{pmatrix} -4.3636\\ 1.5294\\ -2.0588\\ -10.1739\\ \end{pmatrix};\)
+
+Метод простых итераций:
+\(\overline{x}^{(1)} = \overline{B} \cdot \overline{x}^{(0)} + \overline{\gamma} = \begin{pmatrix} -6.7156\\ -3.067\\ -5.0244\\ -9.1157\\ \end{pmatrix}\)
+
+\(\varepsilon_1 = \frac{\parallel B \parallel _1}{1 - \parallel B \parallel _1} \cdot \parallel \overline{x}^{(1)} - \overline{x}^{(0)} \parallel _1 = 3.2517 \cdot \begin{Vmatrix}\begin{pmatrix} -2.352\\ -4.5964\\ -2.9656\\ 1.0582\\ \end{pmatrix}\end{Vmatrix} _1 = 3.2517 \cdot 4.5964 = 14.9461 > \varepsilon\)
+
+\(\overline{x}^{(2)} = \overline{B} \cdot \overline{x}^{(1)} + \overline{\gamma} = \begin{pmatrix} -5.2005\\ -2.5229\\ -6.6118\\ -9.7852\\ \end{pmatrix}\)
+
+\(\varepsilon_1 = 3.2517 \cdot \begin{Vmatrix}\begin{pmatrix} 1.5151\\ 0.5441\\ -1.5874\\ -0.6695\\ \end{pmatrix}\end{Vmatrix} _1 = 3.2517 \cdot 1.5874 = 5.1617 > \varepsilon\)
+
+\(\overline{x}^{(3)} = \overline{B} \cdot \overline{x}^{(2)} + \overline{\gamma} = \begin{pmatrix} -4.9997\\ -2.2511\\ -6.4385\\ -8.978\\ \end{pmatrix}\)
+
+\(\varepsilon_1 = 3.2517 \cdot \begin{Vmatrix}\begin{pmatrix} 0.2008\\ 0.2718\\ 0.1733\\ 0.8072\\ \end{pmatrix}\end{Vmatrix} _1 = 3.2517 \cdot 0.8072 = 2.6248 > \varepsilon\)
+
+\(\overline{x}^{(4)} = \overline{B} \cdot \overline{x}^{(3)} + \overline{\gamma} = \begin{pmatrix} -4.8515\\ -1.9138\\ -6.0816\\ -8.935\\ \end{pmatrix}\)
+
+\(\varepsilon_1 = 3.2517 \cdot \begin{Vmatrix}\begin{pmatrix} 0.1482\\ 0.3373\\ 0.3569\\ 0.043\\ \end{pmatrix}\end{Vmatrix} _1 = 3.2517 \cdot 0.3569 = 1.1605 > \varepsilon\)
+
+\(\overline{x}^{(5)} = \overline{B} \cdot \overline{x}^{(4)} + \overline{\gamma} = \begin{pmatrix} -4.9678\\ -1.9329\\ -5.9325\\ -8.9354\\ \end{pmatrix}\)
+
+\(\varepsilon_1 = 3.2517 \cdot \begin{Vmatrix}\begin{pmatrix} -0.1163\\ -0.0191\\ 0.1491\\ -0.0004\\ \end{pmatrix}\end{Vmatrix} _1 = 3.2517 \cdot 0.1491 = 0.4848 > \varepsilon\)
+
+\(\overline{x}^{(6)} = \overline{B} \cdot \overline{x}^{(5)} + \overline{\gamma} = \begin{pmatrix} -5.0068\\ -1.9799\\ -5.953\\ -8.9989\\ \end{pmatrix}\)
+
+\(\varepsilon_1 = 3.2517 \cdot \begin{Vmatrix}\begin{pmatrix} -0.039\\ -0.047\\ -0.0205\\ -0.0635\\ \end{pmatrix}\end{Vmatrix} _1 = 3.2517 \cdot 0.0635 = 0.2065 > \varepsilon\)
+
+\(\overline{x}^{(7)} = \overline{B} \cdot \overline{x}^{(6)} + \overline{\gamma} = \begin{pmatrix} -5.0142\\ -2.0093\\ -5.9929\\ -9.0099\\ \end{pmatrix}\)
+
+\(\varepsilon_1 = 3.2517 \cdot \begin{Vmatrix}\begin{pmatrix} -0.0074\\ -0.0294\\ -0.0399\\ -0.011\\ \end{pmatrix}\end{Vmatrix} _1 = 3.2517 \cdot 0.0399 = 0.1297 > \varepsilon\)
+
+\(\overline{x}^{(8)} = \overline{B} \cdot \overline{x}^{(7)} + \overline{\gamma} = \begin{pmatrix} -5.0037\\ -2.0081\\ -6.0074\\ -9.0065\\ \end{pmatrix}\)
+
+\(\varepsilon_1 = 3.2517 \cdot \begin{Vmatrix}\begin{pmatrix} 0.0105\\ 0.0012\\ -0.0145\\ 0.0034\\ \end{pmatrix}\end{Vmatrix} _1 = 3.2517 \cdot 0.0145 = 0.0471 > \varepsilon\)
+
+\(\overline{x}^{(9)} = \overline{B} \cdot \overline{x}^{(8)} + \overline{\gamma} = \begin{pmatrix} -4.9989\\ -2.0023\\ -6.0047\\ -9.0006\\ \end{pmatrix}\)
+
+\(\varepsilon_1 = 3.2517 \cdot \begin{Vmatrix}\begin{pmatrix} 0.0048\\ 0.0058\\ 0.0027\\ 0.0059\\ \end{pmatrix}\end{Vmatrix} _1 = 3.2517 \cdot 0.0059 = 0.0192 > \varepsilon\)
+
+\(\overline{x}^{(10)} = \overline{B} \cdot \overline{x}^{(9)} + \overline{\gamma} = \begin{pmatrix} -4.9986\\ -1.9995\\ -6.0004\\ -8.9993\\ \end{pmatrix}\)
+
+\(\varepsilon_1 = 3.2517 \cdot \begin{Vmatrix}\begin{pmatrix} 0.0003\\ 0.0028\\ 0.0043\\ 0.0013\\ \end{pmatrix}\end{Vmatrix} _1 = 3.2517 \cdot 0.0043 = 0.0140 > \varepsilon\)
+
+\(\overline{x}^{(11)} = \overline{B} \cdot \overline{x}^{(10)} + \overline{\gamma} = \begin{pmatrix} -4.9996\\ -1.9997\\ -5.999\\ -8.9998\\ \end{pmatrix}\)
+
+\(\varepsilon_1 = 3.2517 \cdot \begin{Vmatrix}\begin{pmatrix} -0.001\\ -0.0002\\ 0.0014\\ -0.0005\\ \end{pmatrix}\end{Vmatrix} _1 = 3.2517 \cdot 0.0014 = 0.0046 < \varepsilon\)
+
+Ответ:
+\(\displaystyle \begin{cases} x_1 = -4.9996 \approx -5\\ x_2 = -1.9997 \approx -2\\ x_3 = -5.999 \approx -6\\ x_4 = -8.9998 \approx -9\\ \end{cases}\)
+
+\vspace{5mm}
+
+Метод Зейделя:
+
+Получим матрицу C из матрицы B обнулением элементов ниже главной
+диагонали:
+
+\(\displaystyle C = \begin{pmatrix} 0 & -0.0909 & -0.2727 & 0.2727\\ 0 & 0 & -0.1765 & 0.4118\\ 0 & 0 & 0 & 0.2941\\ 0 & 0 & 0 & 0\\ \end{pmatrix};\)
+\(\displaystyle \parallel \overline{C} \parallel _1 = 0.6363.\)
+
+\(\displaystyle x_1^{k+1} = B_{1,1}x_1^{k} + B_{1,2}x_2^{k} + \dots + B_{1,n}x_{n}^{k} + \gamma_1\)
+
+\(\displaystyle x_2^{k+1} = B_{2,1}x_1^{k+1} + B_{2,2}x_2^{k} + \dots + B_{2,n}x_{n}^{k} + \gamma_2\)
+
+\(\displaystyle x_3^{k+1} = B_{3,1}x_1^{k+1} + B_{3,2}x_2^{k+1} + B_{3,3}x_{3}^{k} + \dots + B_{3,n}x_{n}^{k} + \gamma_3\)
+
+\(\displaystyle \vdots\)
+
+\(\displaystyle x_n^{k+1} = B_{n,1}x_1^{k+1} + B_{n,2}x_2^{k+1} + \dots + B_{n,n-1}x_{n-1}^{k+1} + B_{n,n}x_n^{k} + \gamma_n\)
+
+\pagebreak
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi})}
+\item
+\end{enumerate}
+
+\(\displaystyle x_1^{(1)} = (-0.0909)\cdot1.5294 - 0.2727\cdot(-2.0588) + 0.2727\cdot(-10.1739) - 4.3636 = -6.7156\)
+
+\(\displaystyle x_2^{(1)} = 0.1765\cdot(-6.7156) - 0.1765\cdot(-2.0588) + 0.4118\cdot(-10.1739) + 1.5294 = -3.4821\)
+
+\(\displaystyle x_3^{(1)} = 0.1176\cdot(-6.7156) + 0.3529\cdot(-3.4821) + 0.2941\cdot(-10.1739) - 2.0588= -7.0695\)
+
+\(\displaystyle x_4^{(1)} = 0.0435\cdot(-6.7156) + 0.3478\cdot(-3.4821) - 0.3478\cdot(-7.0695) - 10.1739 = -9.2183\)
+
+\(\displaystyle \varepsilon_1 = \frac{0.6363}{1 - 0.7648} \cdot \begin{Vmatrix}\begin{pmatrix} -2.352\\ -5.0115\\ -5.0107\\ 0.9556\\ \end{pmatrix}\end{Vmatrix} _1 = \mathbf{13.5579}\)
+\(\displaystyle > \varepsilon\)
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi})}
+\setcounter{enumi}{1}
+\item
+\end{enumerate}
+
+\(\displaystyle x_1^{(2)} = (-0.0909)\cdot(-3.4821) - 0.2727\cdot(-7.0695) + 0.2727\cdot(-9.2183) - 4.3636 = -4.6331\)
+
+\(\displaystyle x_2^{(2)} = 0.1765\cdot(-4.6331) - 0.1765\cdot(-7.0695) + 0.4118\cdot(-9.2183) + 1.5294 = -1.8367\)
+
+\(\displaystyle x_3^{(2)} = 0.1176\cdot(-4.6331) + 0.3529\cdot(-1.8367) + 0.2941\cdot(-9.2183) - 2.0588= -5.9629\)
+
+\(\displaystyle x_4^{(2)} = 0.0435\cdot(-4.6331) + 0.3478\cdot(-1.8367) - 0.3478\cdot(-5.9629) - 10.1739 = -8.9403\)
+
+\(\displaystyle \varepsilon_2 = 2.7054 \cdot \begin{Vmatrix}\begin{pmatrix} 2.0825\\ 1.6454\\ 1.1066\\ 0.278\\ \end{pmatrix}\end{Vmatrix} _1 = \mathbf{5.6339}\)
+\(\displaystyle > \varepsilon\)
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi})}
+\setcounter{enumi}{2}
+\item
+\end{enumerate}
+
+\(\displaystyle x_1^{(3)} = (-0.0909)\cdot(-1.8367) - 0.2727\cdot(-5.9629) + 0.2727\cdot(-8.9403) - 4.3636 = -5.0086\)
+
+\(\displaystyle x_2^{(3)} = 0.1765\cdot(-5.0086) - 0.1765\cdot(-5.9629) + 0.4118\cdot(-8.9403) + 1.5294 = -1.9838\)
+
+\(\displaystyle x_3^{(3)} = 0.1176\cdot(-5.0086) + 0.3529\cdot(-1.9838) + 0.2941\cdot(-8.9403) - 2.0588= -5.9772\)
+
+\(\displaystyle x_4^{(3)} = 0.0435\cdot(-5.0086) + 0.3478\cdot(-1.9838) - 0.3478\cdot(-5.9772) - 10.1739 = -9.0029\)
+
+\(\displaystyle \varepsilon_3 = 2.7054 \cdot \begin{Vmatrix}\begin{pmatrix} -0.3755\\ -0.1471\\ -0.0143\\ -0.0626\\ \end{pmatrix}\end{Vmatrix} _1 = \mathbf{1.0159}\)
+\(\displaystyle > \varepsilon\)
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi})}
+\setcounter{enumi}{3}
+\item
+\end{enumerate}
+
+\(\displaystyle x_1^{(4)} = (-0.0909)\cdot(-1.9838) - 0.2727\cdot(-5.9772) + 0.2727\cdot(-9.0029) - 4.3636 = -5.0084\)
+
+\(\displaystyle x_2^{(4)} = 0.1765\cdot(-5.0084) - 0.1765\cdot(-5.9772) + 0.4118\cdot(-9.0029) + 1.5294 = -2.007\)
+
+\(\displaystyle x_3^{(4)} = 0.1176\cdot(-5.0084) + 0.3529\cdot(-2.007) + 0.2941\cdot(-9.0029) - 2.0588= -6.0038\)
+
+\(\displaystyle x_4^{(4)} = 0.0435\cdot(-5.0084) + 0.3478\cdot(-2.007) - 0.3478\cdot(-6.0038) - 10.1739 = -9.0017\)
+
+\(\displaystyle \varepsilon_4 = 2.7054 \cdot \begin{Vmatrix}\begin{pmatrix} 0.0002\\ -0.0232\\ -0.0266\\ 0.0012\\ \end{pmatrix}\end{Vmatrix} _1 = \mathbf{0.0720}\)
+\(\displaystyle > \varepsilon\)
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi})}
+\setcounter{enumi}{4}
+\item
+\end{enumerate}
+
+\(\displaystyle x_1^{(5)} = (-0.0909)\cdot(-2.007) - 0.2727\cdot(-6.0038) + 0.2727\cdot(-9.0017) - 4.3636 = -4.9987\)
+
+\(\displaystyle x_2^{(5)} = 0.1765\cdot(-4.9987) - 0.1765\cdot(-6.0038) + 0.4118\cdot(-9.0017) + 1.5294 = -2.0001\)
+
+\(\displaystyle x_3^{(5)} = 0.1176\cdot(-4.9987) + 0.3529\cdot(-2.0001) + 0.2941\cdot(-9.0017) - 2.0588= -5.9999\)
+
+\(\displaystyle x_4^{(5)} = 0.0435\cdot(-4.9987) + 0.3478\cdot(-2.0001) - 0.3478\cdot(-5.9999) - 10.1739 = -9.0002\)
+
+\(\displaystyle \varepsilon_5 = 2.7054 \cdot \begin{Vmatrix}\begin{pmatrix} 0.0097\\ 0.0069\\ 0.0039\\ 0.0015\\ \end{pmatrix}\end{Vmatrix} _1 = \mathbf{0.0262}\)
+\(\displaystyle > \varepsilon\)
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi})}
+\setcounter{enumi}{5}
+\item
+\end{enumerate}
+
+\(\displaystyle x_1^{(6)} = (-0.0909)\cdot(-2.0001) - 0.2727\cdot(-5.9999) + 0.2727\cdot(-9.0002) - 4.3636 = -5\)
+
+\(\displaystyle x_2^{(6)} = 0.1765\cdot(-5) - 0.1765\cdot(-5.9999) + 0.4118\cdot(-9.0002) + 1.5294 = -2.0004\)
+
+\(\displaystyle x_3^{(6)} = 0.1176\cdot(-5) + 0.3529\cdot(-2.0004) + 0.2941\cdot(-9.0002) - 2.0588= -5.9997\)
+
+\(\displaystyle x_4^{(6)} = 0.0435\cdot(-5) + 0.3478\cdot(-2.0004) - 0.3478\cdot(-5.9997) - 10.1739 = -9.0004\)
+
+\(\displaystyle \varepsilon_6 = 2.7054 \cdot \begin{Vmatrix}\begin{pmatrix} -0.0013\\ -0.0003\\ 0.0002\\ -0.0002\\ \end{pmatrix}\end{Vmatrix} _1 = \mathbf{0.0035}\)
+\(\displaystyle < \varepsilon\)
+
+Ответ:
+\(\displaystyle \begin{cases} x_1 = -5\\ x_2 = -2.0004 \approx -2\\ x_3 = -5.9997 \approx -6\\ x_4 = -9.0004 \approx -9\\ \end{cases}\)
+
+\pagebreak
+
+1.4 Используя метод вращений, найти собственные значения и собственные
+векторы симметричной матрицы с точностью \(\varepsilon = 0.01\) .
+
+\[A = \begin{pmatrix} 
+-7 & -5 & -9\\
+-5 & 5 & 2\\
+-9 & 2 & 9\\
+\end{pmatrix} = A_{0}\]
+
+Рассмотрим задачу нахождения всех собственных чисел и векторов для
+вещественной симметричной матрицы порядка \(n\). Будем применять к ней
+преобразование подобия, не изменяющее спектра (собственных чисел).
+Выберем наибольший по модулю элемент \(a_{k,m}\) матрицы, не лежащий на
+главной диагонали, и преобразуем матрицу так. чтобы он стал нулём. Это
+преобразование представляет собой поворот двухмерной плоскости,
+проходящей через \(k\)-ю и \(m\)-ю оси координат на специально
+подобранный угол \(\varphi\). Остальные элементы тоже как-то изменятся.
+Опять выберем наибольший по модулю элемент матрицы, не лежащий на
+главной диагонали и опять преобразуем (повернём) матрицу так. чтобы он
+стал нулём. Там. где до поворота стоял ноль, его может уже и не быть, но
+максимальные внедиагональные элементы будут быстро уменьшаться. Через
+некоторое число преобразований (поворотов-вращений) все внедиагональные
+элементы будут равняться почти нулю, тогда стоящие на главной диагонали
+числа и будут собственными числами исходной матрицы. Собственные вектора
+получают, перемножив все матрицы поворотов. Вычисленная таким образом
+матрица будет иметь своими столбцами собственные вектора.
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi})}
+\item
+\end{enumerate}
+
+\(\displaystyle \text{max} |a_{\substack{i,j \\ i<j}}| = a_{1,3} = -9\)
+
+\[S_{1,3}^{(1)} = \begin{pmatrix} 
+\cos(\varphi_{1}) & 0 & -\sin(\varphi_{1})\\
+0 & 1 & 0\\
+\sin(\varphi_{1}) & 0 & \cos(\varphi_{1})\\
+\end{pmatrix}\]
+\(\displaystyle \varphi_{1} = \frac{1}{2} \cdot \arctan\left(\frac{2 \cdot a_{1,3}}{a_{1,1} - a_{3,3}}\right) = \frac{1}{2} \cdot \arctan\left(\frac{2 \cdot (-9)}{(-7) - 9}\right) = 0.4221\)
+
+\(\displaystyle \cos(\varphi_1) = 0.9122, \sin(\varphi_1) = 0.4097\)
+
+\(\displaystyle \mathbf{A_1} = S_{1,3}^{(1)T} \cdot A_0 \cdot S_{1,3}^{(1)} =\)
+\(\displaystyle \begin{pmatrix} 0.9122 & 0 & 0.4097\\ 0 & 1 & 0\\ -0.4097 & 0 & 0.9122\\ \end{pmatrix} \cdot \begin{pmatrix} -7 & -5 & -9\\ -5 & 5 & 2\\ -9 & 2 & 9\\ \end{pmatrix} \cdot \begin{pmatrix} 0.9122 & 0 & -0.4097\\ 0 & 1 & 0\\ 0.4097 & 0 & 0.9122\\ \end{pmatrix} =\)
+
+=
+\(\displaystyle \begin{pmatrix} -10.0727 & -3.7416 & -4.5225\\ -5 & 5 & 2\\ -5.3419 & 3.8729 & 11.8971\\ \end{pmatrix} \cdot \begin{pmatrix} 0.9122 & 0 & -0.4097\\ 0 & 1 & 0\\ 0.4097 & 0 & 0.9122\\ \end{pmatrix} =\)
+\(\displaystyle \begin{pmatrix} -11.0412 & -3.7416 & 0.0014\\ -3.7416 & 5 & 3.8729\\ 0.0014 & 3.8729 & 13.0411\\ \end{pmatrix}\)
+
+\(\displaystyle \varepsilon_1 = \sqrt{(-3.7416)^2 + 0.0014^2 + 3.8729^2 } = \mathbf{5.3851}\)
+\(\displaystyle > \varepsilon\)
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi})}
+\setcounter{enumi}{1}
+\item
+\end{enumerate}
+
+\(\displaystyle \text{max} |a_{\substack{i,j \\ i<j}}| = a_{2,3} = 3.8729\)
+
+\[S_{2,3}^{(2)} = \begin{pmatrix} 
+1 & 0 & 0\\
+0 & \cos(\varphi_{2}) & -\sin(\varphi_{2})\\
+0 & \sin(\varphi_{2}) & \cos(\varphi_{2})\\
+\end{pmatrix}\]
+\(\displaystyle \varphi_{2} = \frac{1}{2} \cdot \arctan\left(\frac{2 \cdot a_{2,3}}{a_{2,2} - a_{3,3}}\right) = \frac{1}{2} \cdot \arctan\left(\frac{2 \cdot 3.8729}{5 - 13.0411}\right) = -0.3833\)
+
+\(\displaystyle \cos(\varphi_2) = 0.9274, \sin(\varphi_2) = -0.374\)
+
+\(\displaystyle \mathbf{A_2} = S_{2,3}^{(2)T} \cdot A_1 \cdot S_{2,3}^{(2)} =\)
+\(\displaystyle \begin{pmatrix} -11.0412 & -3.4705 & -1.3981\\ -3.4705 & 3.4378 & 0.0002\\ -1.3981 & 0.0002 & 14.6023\\ \end{pmatrix}\)
+
+\(\displaystyle \varepsilon_2 = \sqrt{(-3.4705)^2 + (-1.3981)^2 + 0.0002^2 } = \mathbf{3.7415}\)
+\(\displaystyle > \varepsilon\)
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi})}
+\setcounter{enumi}{2}
+\item
+\end{enumerate}
+
+\(\displaystyle \text{max} |a_{\substack{i,j \\ i<j}}| = a_{1,2} = -3.4705\)
+
+\[S_{1,2}^{(3)} = \begin{pmatrix} 
+\cos(\varphi_{3}) & -\sin(\varphi_{3}) & 0\\
+\sin(\varphi_{3}) & \cos(\varphi_{3}) & 0\\
+0 & 0 & 1\\
+\end{pmatrix}\]
+\(\displaystyle \varphi_{3} = \frac{1}{2} \cdot \arctan\left(\frac{2 \cdot a_{1,2}}{a_{1,1} - a_{2,2}}\right) = \frac{1}{2} \cdot \arctan\left(\frac{2 \cdot (-3.4705)}{(-11.0412) - 3.4378}\right) = 0.2235\)
+
+\(\displaystyle \cos(\varphi_3) = 0.9751, \sin(\varphi_3) = 0.2216\)
+
+\(\displaystyle \mathbf{A_3} = S_{1,2}^{(3)T} \cdot A_2 \cdot S_{1,2}^{(3)} =\)
+\(\displaystyle \begin{pmatrix} -11.8292 & -0.0008 & -1.3632\\ -0.0008 & 4.2264 & 0.31\\ -1.3632 & 0.31 & 14.6023\\ \end{pmatrix}\)
+
+\(\displaystyle \varepsilon_3 = \sqrt{(-0.0008)^2 + (-1.3632)^2 + 0.31^2 } = \mathbf{1.3980}\)
+\(\displaystyle > \varepsilon\)
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi})}
+\setcounter{enumi}{3}
+\item
+\end{enumerate}
+
+\(\displaystyle \text{max} |a_{\substack{i,j \\ i<j}}| = a_{1,3} = -1.3632\)
+
+\[S_{1,3}^{(4)} = \begin{pmatrix} 
+\cos(\varphi_{4}) & 0 & -\sin(\varphi_{4})\\
+0 & 1 & 0\\
+\sin(\varphi_{4}) & 0 & \cos(\varphi_{4})\\
+\end{pmatrix}\]
+\(\displaystyle \varphi_{4} = \frac{1}{2} \cdot \arctan\left(\frac{2 \cdot a_{1,3}}{a_{1,1} - a_{3,3}}\right) = \frac{1}{2} \cdot \arctan\left(\frac{2 \cdot (-1.3632)}{(-11.8292) - 14.6023}\right) = 0.0514\)
+
+\(\displaystyle \cos(\varphi_4) = 0.9987, \sin(\varphi_4) = 0.0514\)
+
+\(\displaystyle \mathbf{A_4} = S_{1,3}^{(4)T} \cdot A_3 \cdot S_{1,3}^{(4)} =\)
+\(\displaystyle \begin{pmatrix} -11.8999 & 0.0151 & 0.0007\\ 0.0151 & 4.2264 & 0.3096\\ 0.0008 & 0.3096 & 14.6731\\ \end{pmatrix}\)
+
+\(\displaystyle \varepsilon_4 = \sqrt{0.0151^2 + 0.0007^2 + 0.3096^2 } = \mathbf{0.3100}\)
+\(\displaystyle > \varepsilon\)
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi})}
+\setcounter{enumi}{4}
+\item
+\end{enumerate}
+
+\(\displaystyle \text{max} |a_{\substack{i,j \\ i<j}}| = a_{2,3} = 0.3096\)
+
+\[S_{2,3}^{(5)} = \begin{pmatrix} 
+1 & 0 & 0\\
+0 & \cos(\varphi_{5}) & -\sin(\varphi_{5})\\
+0 & \sin(\varphi_{5}) & \cos(\varphi_{5})\\
+\end{pmatrix}\]
+\(\displaystyle \varphi_{5} = \frac{1}{2} \cdot \arctan\left(\frac{2 \cdot a_{2,3}}{a_{2,2} - a_{3,3}}\right) = \frac{1}{2} \cdot \arctan\left(\frac{2 \cdot 0.3096}{4.2264 - 14.6731}\right) = -0.0296\)
+
+\(\displaystyle \cos(\varphi_5) = 0.9996, \sin(\varphi_5) = -0.0296\)
+
+\(\displaystyle \mathbf{A_5} = S_{2,3}^{(5)T} \cdot A_4 \cdot S_{2,3}^{(5)} =\)
+\(\displaystyle \begin{pmatrix} -11.8999 & 0.0151 & 0.0011\\ 0.0151 & 4.2175 & 0\\ 0.0012 & 0 & 14.6834\\ \end{pmatrix}\)
+
+\(\displaystyle \varepsilon_5 = \sqrt{0.0151^2 + 0.0011^2 + 0^2 } = \mathbf{0.0151}\)
+\(\displaystyle > \varepsilon\)
+
+\pagebreak
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi})}
+\setcounter{enumi}{5}
+\item
+\end{enumerate}
+
+\(\displaystyle \text{max} |a_{\substack{i,j \\ i<j}}| = a_{1,2} = 0.0151\)
+
+\[S_{1,2}^{(6)} = \begin{pmatrix} 
+\cos(\varphi_{6}) & -\sin(\varphi_{6}) & 0\\
+\sin(\varphi_{6}) & \cos(\varphi_{6}) & 0\\
+0 & 0 & 1\\
+\end{pmatrix}\]
+\(\displaystyle \varphi_{6} = \frac{1}{2} \cdot \arctan\left(\frac{2 \cdot a_{1,2}}{a_{1,1} - a_{2,2}}\right) = \frac{1}{2} \cdot \arctan\left(\frac{2 \cdot 0.0151}{(-11.8999) - 4.2175}\right) = -0.0009\)
+
+\(\displaystyle \cos(\varphi_6) = 1, \sin(\varphi_6) = -0.0009\)
+
+\(\displaystyle \mathbf{A_6} = S_{1,2}^{(6)T} \cdot A_5 \cdot S_{1,2}^{(6)} =\)
+\(\displaystyle \begin{pmatrix} -11.8999 & 0.0006 & 0.0011\\ 0.0006 & 4.2175 & 0\\ 0.0012 & 0 & 14.6834\\ \end{pmatrix}\)
+
+\(\displaystyle \varepsilon_6 = \sqrt{0.0006^2 + 0.0011^2 + 0^2 } = \mathbf{0.0013}\)
+\(\displaystyle < \varepsilon\)
+
+\(\displaystyle S = S_{1,3}^{(1)} \cdot S_{2,3}^{(2)} \cdot S_{1,2}^{(3)} \cdot S_{1,3}^{(4)} \cdot S_{2,3}^{(5)} \cdot S_{1,2}^{(6)} = \begin{pmatrix} 0.9027 & -0.0393 & -0.4284\\ 0.2237 & 0.8934 & 0.3896\\ 0.3674 & -0.4475 & 0.8154\\ \end{pmatrix}\)
+
+Ответ:
+\(\displaystyle \lambda_1 = -11.8999, \lambda_2 = 4.2175, \lambda_3 = 14.6834;\)
+
+\[\: \overline{x}^{(1)} = \begin{pmatrix} 
+0.9027\\
+0.2237\\
+0.3674\\
+\end{pmatrix}, \overline{x}^{(2)} = \begin{pmatrix} 
+-0.0393\\
+0.8934\\
+-0.4475\\
+\end{pmatrix}, \overline{x}^{(3)} = \begin{pmatrix} 
+-0.4284\\
+0.3896\\
+0.8154\\
+\end{pmatrix}.\]
+
+\pagebreak
+
+1.5 Используя степенной метод оценить спектральный радиус с точностью
+\(\varepsilon = 0.01\) .
+
+\[A = \begin{pmatrix} 
+-7 & -5 & -9\\
+-5 & 5 & 2\\
+-9 & 2 & 9\\
+\end{pmatrix}\]
+
+Пусть дана матрица A у которой собственные числа (спектр) удовлетворяют
+соотношению
+\(\|\lambda_1\| > \|\lambda_2\| \geq \|\lambda_3\| \geq \dots \geq \|\lambda_n\|\).
+Построим последовательность векторов:
+\[\overline{x}^{(k+1)} = A \cdot \overline{y}^{(k)} , \overline{y}^{(k)}=\frac{\overline{x}^{(k)}}{\parallel \overline{x}^{(k)} \parallel _1}\]
+За начальный вектор \(\overline{y}^{(0)}\) можно взять , например,
+единичным вектор е = \{1;1;\ldots{};1\}. Под нормой будем понимать
+первую ному, т.е. чтобы вычислить вектор \(\overline{y}\) , нужно в
+векторе \(\overline{x}\) найти максимальную по модулю компоненту и
+разделить все компоненты вектора \(\overline{x}\) на неё. Эта компонента
+станет единицей, а остальные станут по модулю меньше единицы. Такой
+алгоритм позволяет найти спектральный радиус \(\rho=\| \lambda_1 \|\)
+как предел последовательности максимальных по модулю компонент векторов
+\(\overline{x}^{(n)}\) . Пределом последовательности векторов
+\(\overline{y}\) будет собственный вектор, соответствующий
+\(\lambda_1\).
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi})}
+\item
+\end{enumerate}
+
+\(\displaystyle \overline{x}^{(0)} = \begin{pmatrix} 1\\ 1\\ 1\\ \end{pmatrix}\)
+; \(\displaystyle \parallel \overline{x}^{(0)} \parallel = 1;\)
+\(\displaystyle \overline{y}^{(0)} = \frac{\overline{x}^{(0)}}{\parallel \overline{x}^{(0)} \parallel _1} = \begin{pmatrix} 1\\ 1\\ 1\\ \end{pmatrix}\)
+
+\(\displaystyle \overline{x}^{(1)} = A \cdot \overline{y}^{(0)} = \begin{pmatrix} -7 & -5 & -9\\ -5 & 5 & 2\\ -9 & 2 & 9\\ \end{pmatrix}\cdot\begin{pmatrix} 1\\ 1\\ 1\\ \end{pmatrix} = \begin{pmatrix} -21\\ 2\\ 2\\ \end{pmatrix}\)
+
+\(\displaystyle \varepsilon_1 = |21 - 1| = 20 > \varepsilon\)
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi})}
+\setcounter{enumi}{1}
+\item
+\end{enumerate}
+
+\(\displaystyle \parallel \overline{x}^{(1)} \parallel = 21;\)
+\(\displaystyle \overline{y}^{(1)} = \frac{\overline{x}^{(1)}}{\parallel \overline{x}^{(1)} \parallel _1} = \begin{pmatrix} -1\\ 0.0952\\ 0.0952\\ \end{pmatrix}\)
+
+\(\displaystyle \overline{x}^{(2)} = A \cdot \overline{y}^{(1)} = \begin{pmatrix} -7 & -5 & -9\\ -5 & 5 & 2\\ -9 & 2 & 9\\ \end{pmatrix}\cdot\begin{pmatrix} -1\\ 0.0952\\ 0.0952\\ \end{pmatrix} = \begin{pmatrix} 5.6672\\ 5.6664\\ 10.0472\\ \end{pmatrix}\)
+
+\(\displaystyle \varepsilon_2 = |10.0472 - 21| = 10.9528 > \varepsilon\)
+Продолжим вычисления, результаты выпишем в таблицу:
+
+\vspace{5mm}\begin{center}
+\begin{tabular}{ | l  | l  | l  | l  | l |}
+\hline
+вектор & $x_1(y_1)$ & $x_2(y_2)$ & $x_3(y_3)$ & $\parallel x^{(n)} \parallel _1$ \\ \hline
+$\overline{x}^{(3)}$ & -15.7687 & 1.9995 & 5.0511 & 15.7687 \\ \hline
+$\overline{y}^{(3)}$ & 0.5641 & 0.564 & 1 &   \\ \hline
+$\overline{x}^{(4)}$ & 3.4833 & 6.2746 & 12.1363 & 12.1363 \\ \hline
+$\overline{y}^{(4)}$ & -1 & 0.1268 & 0.3203 &   \\ \hline
+$\overline{x}^{(5)}$ & -13.594 & 3.15 & 7.451 & 13.594 \\ \hline
+$\overline{y}^{(5)}$ & 0.287 & 0.517 & 1 &   \\ \hline
+$\overline{x}^{(6)}$ & 0.9086 & 7.2547 & 14.3963 & 14.3963 \\ \hline
+$\overline{y}^{(6)}$ & -1 & 0.2317 & 0.5481 &   \\ \hline
+\end{tabular}
+\end{center}
+
+\pagebreak
+
+\begin{center}
+\begin{tabular}{ | l  | l  | l  | l  | l |}
+\hline
+вектор & $x_1(y_1)$ & $x_2(y_2)$ & $x_3(y_3)$ & $\parallel x^{(n)} \parallel _1$ \\ \hline
+$\overline{x}^{(7)}$ & -11.9612 & 4.204 & 9.4399 & 11.9612 \\ \hline
+$\overline{y}^{(7)}$ & 0.0631 & 0.5039 & 1 &   \\ \hline
+$\overline{x}^{(8)}$ & -1.8603 & 8.3359 & 16.8058 & 16.8058 \\ \hline
+$\overline{y}^{(8)}$ & -1 & 0.3515 & 0.7892 &   \\ \hline
+$\overline{x}^{(9)}$ & -10.7051 & 5.0335 & 10.9883 & 10.9883 \\ \hline
+$\overline{y}^{(9)}$ & -0.1107 & 0.496 & 1 &   \\ \hline
+$\overline{x}^{(10)}$ & -4.4711 & 9.1615 & 18.684 & 18.684 \\ \hline
+$\overline{y}^{(10)}$ & -0.9742 & 0.4581 & 1 &   \\ \hline
+$\overline{x}^{(11)}$ & -9.7764 & 5.648 & 12.1343 & 12.1343 \\ \hline
+$\overline{y}^{(11)}$ & -0.2393 & 0.4903 & 1 &   \\ \hline
+$\overline{x}^{(12)}$ & -5.6876 & 8.356 & 17.1823 & 17.1823 \\ \hline
+$\overline{y}^{(12)}$ & -0.8057 & 0.4655 & 1 &   \\ \hline
+$\overline{x}^{(13)}$ & -9.1145 & 6.0865 & 12.9516 & 12.9516 \\ \hline
+$\overline{y}^{(13)}$ & -0.331 & 0.4863 & 1 &   \\ \hline
+$\overline{x}^{(14)}$ & -6.4236 & 7.868 & 16.2731 & 16.2731 \\ \hline
+$\overline{y}^{(14)}$ & -0.7037 & 0.4699 & 1 &   \\ \hline
+$\overline{x}^{(15)}$ & -8.6546 & 6.391 & 13.5193 & 13.5193 \\ \hline
+$\overline{y}^{(15)}$ & -0.3947 & 0.4835 & 1 &   \\ \hline
+$\overline{x}^{(16)}$ & -6.8821 & 7.5645 & 15.7072 & 15.7072 \\ \hline
+$\overline{y}^{(16)}$ & -0.6402 & 0.4727 & 1 &   \\ \hline
+$\overline{x}^{(17)}$ & -8.3413 & 6.5985 & 13.9061 & 13.9061 \\ \hline
+$\overline{y}^{(17)}$ & -0.4381 & 0.4816 & 1 &   \\ \hline
+$\overline{x}^{(18)}$ & -7.1739 & 7.3715 & 15.3472 & 15.3472 \\ \hline
+$\overline{y}^{(18)}$ & -0.5998 & 0.4745 & 1 &   \\ \hline
+$\overline{x}^{(19)}$ & -8.1297 & 6.7385 & 14.1672 & 14.1672 \\ \hline
+$\overline{y}^{(19)}$ & -0.4674 & 0.4803 & 1 &   \\ \hline
+$\overline{x}^{(20)}$ & -7.3614 & 7.247 & 15.1154 & 15.1154 \\ \hline
+$\overline{y}^{(20)}$ & -0.5738 & 0.4756 & 1 &   \\ \hline
+$\overline{x}^{(21)}$ & -7.988 & 6.832 & 14.3418 & 14.3418 \\ \hline
+$\overline{y}^{(21)}$ & -0.487 & 0.4794 & 1 &   \\ \hline
+$\overline{x}^{(22)}$ & -7.483 & 7.167 & 14.9658 & 14.9658 \\ \hline
+$\overline{y}^{(22)}$ & -0.557 & 0.4764 & 1 &   \\ \hline
+$\overline{x}^{(23)}$ & -7.8945 & 6.8945 & 14.4578 & 14.4578 \\ \hline
+$\overline{y}^{(23)}$ & -0.5 & 0.4789 & 1 &   \\ \hline
+$\overline{x}^{(24)}$ & -7.5625 & 7.1145 & 14.8678 & 14.8678 \\ \hline
+$\overline{y}^{(24)}$ & -0.546 & 0.4769 & 1 &   \\ \hline
+$\overline{x}^{(25)}$ & -7.8323 & 6.9355 & 14.5344 & 14.5344 \\ \hline
+$\overline{y}^{(25)}$ & -0.5086 & 0.4785 & 1 &   \\ \hline
+$\overline{x}^{(26)}$ & -7.6137 & 7.0805 & 14.8045 & 14.8045 \\ \hline
+$\overline{y}^{(26)}$ & -0.5389 & 0.4772 & 1 &   \\ \hline
+$\overline{x}^{(27)}$ & -7.7914 & 6.963 & 14.5853 & 14.5853 \\ \hline
+$\overline{y}^{(27)}$ & -0.5143 & 0.4783 & 1 &   \\ \hline
+$\overline{x}^{(28)}$ & -7.6476 & 7.058 & 14.7626 & 14.7626 \\ \hline
+$\overline{y}^{(28)}$ & -0.5342 & 0.4774 & 1 &   \\ \hline
+$\overline{x}^{(29)}$ & -7.7645 & 6.9805 & 14.6182 & 14.6182 \\ \hline
+$\overline{y}^{(29)}$ & -0.518 & 0.4781 & 1 &   \\ \hline
+$\overline{x}^{(30)}$ & -7.6691 & 7.0435 & 14.7358 & 14.7358 \\ \hline
+$\overline{y}^{(30)}$ & -0.5312 & 0.4775 & 1 &   \\ \hline
+$\overline{x}^{(31)}$ & -7.7472 & 6.992 & 14.6396 & 14.6396 \\ \hline
+$\overline{y}^{(31)}$ & -0.5204 & 0.478 & 1 &   \\ \hline
+\end{tabular}
+\end{center}
+
+\pagebreak
+
+\begin{center}
+\begin{tabular}{ | l  | l  | l  | l  | l |}
+\hline
+вектор & $x_1(y_1)$ & $x_2(y_2)$ & $x_3(y_3)$ & $\parallel x^{(n)} \parallel _1$ \\ \hline
+$\overline{x}^{(32)}$ & -7.6836 & 7.034 & 14.718 & 14.718 \\ \hline
+$\overline{y}^{(32)}$ & -0.5292 & 0.4776 & 1 &   \\ \hline
+$\overline{x}^{(33)}$ & -7.7348 & 7 & 14.6547 & 14.6547 \\ \hline
+$\overline{y}^{(33)}$ & -0.5221 & 0.4779 & 1 &   \\ \hline
+$\overline{x}^{(34)}$ & -7.6939 & 7.0275 & 14.7056 & 14.7056 \\ \hline
+$\overline{y}^{(34)}$ & -0.5278 & 0.4777 & 1 &   \\ \hline
+$\overline{x}^{(35)}$ & -7.7271 & 7.0055 & 14.6646 & 14.6646 \\ \hline
+$\overline{y}^{(35)}$ & -0.5232 & 0.4779 & 1 &   \\ \hline
+$\overline{x}^{(36)}$ & -7.7002 & 7.023 & 14.6975 & 14.6975 \\ \hline
+$\overline{y}^{(36)}$ & -0.5269 & 0.4777 & 1 &   \\ \hline
+$\overline{x}^{(37)}$ & -7.7217 & 7.0085 & 14.6707 & 14.6707 \\ \hline
+$\overline{y}^{(37)}$ & -0.5239 & 0.4778 & 1 &   \\ \hline
+$\overline{x}^{(38)}$ & -7.7044 & 7.02 & 14.6921 & 14.6921 \\ \hline
+$\overline{y}^{(38)}$ & -0.5263 & 0.4777 & 1 &   \\ \hline
+$\overline{x}^{(39)}$ & -7.7182 & 7.011 & 14.6752 & 14.6752 \\ \hline
+$\overline{y}^{(39)}$ & -0.5244 & 0.4778 & 1 &   \\ \hline
+$\overline{x}^{(40)}$ & -7.7072 & 7.018 & 14.6885 & 14.6885 \\ \hline
+$\overline{y}^{(40)}$ & -0.5259 & 0.4777 & 1 &   \\ \hline
+$\overline{x}^{(41)}$ & -7.7161 & 7.0125 & 14.6779 & 14.6779 \\ \hline
+$\overline{y}^{(41)}$ & -0.5247 & 0.4778 & 1 &   \\ \hline
+$\overline{x}^{(42)}$ & -7.7091 & 7.0175 & 14.6869 & 14.6869 \\ \hline
+$\overline{y}^{(42)}$ & -0.5257 & 0.4778 & 1 &   \\ \hline
+\end{tabular}
+\end{center}
+
+Ответ: \(\displaystyle \rho (A) = 14.6869\)
+
+\pagebreak
+
+2.1 Методом простой итерации и Ньютона найти положительный корень
+нелинейного уравнения; начальное приближение определить графически .
+
+\[x^3 - 2x^2 - 10x + 15 = 0\]
+
+\begin{center}
+\begin{tikzpicture}
+  \begin{axis}[ 
+    legend style={at={(1,0.3)}, anchor=east},
+    xlabel=$x$,
+    ylabel={$y$},
+   grid=major,
+width=10cm,height=10cm,
+xmin=-4.0, xmax=4.0,
+axis x line=center,
+axis y line=center
+  ] 
+    \addplot [style={solid},smooth]{x^3-2*x^2-10*x+15}; \addlegendentry{$f(x) = x^3 - 2x^2 - 10x + 15$};
+    \addplot[only marks] coordinates {
+ (1.3820,0)
+ (3.6180,0)
+ };
+  \end{axis}
+\end{tikzpicture}
+\end{center}
+
+\(\displaystyle f(x) = x^3 - 2x^2 - 10x + 15\)
+
+\(\displaystyle f'(x) = 2x^2 - 4x - 10\)
+
+\(\displaystyle f''(x) = 6x - 4\)
+
+Графически определены два положительных корня в областях: 1 \textless{}
+x\textsubscript{1} \textless{} 2; 3 \textless{} x\textsubscript{2}
+\textless{} 4
+
+Метод Ньютона Пусть функция \(f(x)\) дважды непрерывно дифференцирована.
+Пусть в окрестности корня уравнения \(f(x)=0\), в некоторой точке
+\(a_0\), выполняется соотношение \(f(a_0)\cdot f''(a_0) >0\). Из точки
+\(A(a_0:f(a_0))\) проведём касательную к графику функции \(y=f(x)\) .
+Она пересечёт ось \(OX\) в точке \(a_1\) :
+\(a_1 = a_0 - \frac{f(a_0)}{f'(a_0)}\) . Из точки \(A_1(a_1;f(a_1))\)
+проведём касательную к графику функции \(y=f(x)\) . Она пересечёт ось
+\(OX\) в точке \(a_2 = a_1 - \frac{f(a_1)}{f'(a_1)}\) . Таким образом,
+можно получить бесконечную последовательность точек \(a_n\), которые
+быстро будут приближаться к корню.
+
+\vspace{5mm}
+
+Из условия \(f(x_0) \cdot f''(x_0) > 0\) выберем начальную точку:
+x\textsubscript{0} .
+
+\(\displaystyle f(1) = 4; f''(1) = 2; f(3) = -6; f''(3) = 14;\)
+
+\(\displaystyle f(2) = -5; f''(2) = 8; f(4) = 7; f''(4) = 20.\)
+
+x\textsubscript{0} = 1;
+\(\displaystyle x_1 = x_0 - \frac{f(x_0)}{f'(x_0)} = 1 - \frac{4}{-11} = 1.3636\)
+
+\(\displaystyle \varepsilon_1 = |1.3636 - 1| = 0.3636 > 0.01\)
+
+\(\displaystyle x_2 = x_1 - \frac{f(x_1)}{f'(x_1)} = 1.3636 - \frac{0.1807}{-9.8762} = 1.3819\)
+
+\(\displaystyle \varepsilon_2 = |1.3819 - 1.3636| = 0.0183 > 0.01\)
+
+\(\displaystyle x_3 = x_2 - \frac{f(x_2)}{f'(x_2)} = 1.3819 - \frac{0.0006}{-9.7987} = 1.382\)
+
+\(\displaystyle \varepsilon_3 = |1.382 - 1.3819| = 0.0001 < 0.01\)
+
+Ответ: \(x = x_3 = 1.382\) .
+
+\pagebreak
+
+Метод простой итерации
+
+Пусть уравнение \(f(x)=0\) удалось преобразовать к равносильному
+уравнению \(x=\varphi(x)\), функция \(\varphi(x)\) которого обладает
+свойством: в окрестности корня \(x\): \(| \varphi '(x) | \leq q < 1\) то
+итерационный процесс \(x_{n+1} = \varphi(x_n)\) будет сходиться к корню
+x. уравнения \(f(x)=0\). Причём, сходимость будет тем быстрее, чем
+меньше \(q\). Величины \(x_n - x\) будут убывать не медленнее
+бесконечно-убывающей прогрессии со знаменателем \(q\).
+
+\vspace{5mm}
+
+Преобразуем \(f(x)\) к \(x=\varphi(x)\) :
+\(\displaystyle x = 2 + \frac{10}{x} - \frac{15}{x^2}\) ;
+\(\displaystyle \varphi '(x) = \frac{30}{x^3} - \frac{10}{x^2}\)
+
+Из условия \(\varphi '(x_0) < 1\) выберем начальную точку:
+x\textsubscript{0} .
+
+\(\displaystyle \varphi '(1) = 20; \varphi '(2) = 1.25; \varphi '(4) = -0.1563 .\)
+При x\textsubscript{0} = 4 имеется сходимость,
+\(q = | \varphi '(x_0) | = 0.1563\) .
+
+\(\displaystyle \varepsilon = \frac{1 - q}{q} \cdot \varepsilon = \frac{1 - 0.1563}{0.1563} \cdot 0.01 = 0.054\)
+
+\(\displaystyle x_1 = \varphi(x_0) = 2 + \frac{10}{4} - \frac{15}{16} = 3.5625\)
+
+\(\displaystyle \varepsilon_1 = |3.5625 - 4| = 0.4375 > 0.054\)
+
+\(\displaystyle x_2 = \varphi(x_1) = 2 + \frac{10}{3.5625} - \frac{15}{12.6914} = 3.6251\)
+
+\(\displaystyle \varepsilon_2 = |3.6251 - 3.5625| = 0.0626 > 0.054\)
+
+\(\displaystyle x_3 = \varphi(x_2) = 2 + \frac{10}{3.6251} - \frac{15}{13.1414} = 3.6171\)
+
+\(\displaystyle \varepsilon_3 = |3.6171 - 3.6251| = 0.008 < 0.054\)
+
+Ответ: \(x = x_3 = 3.6171\) .
+
+\pagebreak
+
+2.2. Методом Ньютона решить систему нелинейных уравнений (при наличии
+нескольких решений найти то из них, в котором значения неизвестных
+являются положительными), начальное приближение определить графически .
+
+\[\left\{\begin{matrix}
+\frac{x_1^2}{9} + \frac{x_2^2}{9 / 4} - 1 = 0\\
+3x_2 - e^{x_1} - x_1 = 0\\
+\end{matrix}\right.\]
+
+Метод Ньютона решения систем сводится к последовательному решению систем
+линейных алгебраических уравнений, полученных путем линеаризации системы
+нелинейных уравнений. Для k-го приближения неизвестных ищется
+приближение (k+1) через приращение \(\Delta x^{k}\) : \[\begin{cases}
+\left. \frac{\partial f_1}{\partial x}\right|_{(x_k;y_k)} \cdot \Delta x_{k+1} + \left. \frac{\partial f_1}{\partial y}\right|_{(x_k;y_k)} \cdot \Delta y_{k+1} + f_1(x_k;y_k) = 0\\
+\left. \frac{\partial f_2}{\partial x}\right|_{(x_k;y_k)} \cdot \Delta x_{k+1} + \left. \frac{\partial f_2}{\partial y}\right|_{(x_k;y_k)} \cdot \Delta y_{k+1} + f_2(x_k;y_k) = 0\\
+\end{cases}\]
+
+\[\begin{cases}
+x_{k+1} = x_k + \Delta x_{k+1}\\
+y_{k+1} = y_k + \Delta y_{k+1}\\
+\end{cases}\]
+
+Для каждой итерации должно выполняться условие:
+\(\displaystyle J = \begin{pmatrix} \frac{\partial f_1(x_k)}{\partial x} & \frac{\partial f_1(y_k)}{\partial y}\\ \frac{\partial f_2(x_k)}{\partial x} & \frac{\partial f_2(y_k)}{\partial y}\\ \end{pmatrix}; | J | \neq 0\)
+
+\vspace{5mm}\begin{center}
+\begin{tikzpicture}
+  \begin{axis}[ 
+    legend style={at={(1,0.3)}, anchor=west},
+    xlabel=$x_1$,
+    ylabel={$x_2$},
+   grid=major,
+width=10cm,height=10cm,
+xmin=-2.0, xmax=2.5,
+axis x line=center,
+axis y line=center,
+xtick={-2,-1,2,1,1.25,2},
+ytick={1,1.5,3.5}
+  ] 
+    \addplot[style={mark=square}, smooth] {sqrt((9- (x^2))/4)}; \addlegendentry{$f(x_1) = \sqrt{\frac{9 - x_1^2}{4}}$};
+    \addplot[style={mark=asterisk}, smooth] {(x+exp(x))/3)}; \addlegendentry{$f(x_1) = \frac{x_1 + e^{x_1}}{3}$};
+    \addplot[only marks] coordinates {
+ (1.1178,1.3920)
+ };
+  \end{axis}
+\end{tikzpicture}
+\end{center}
+
+\vspace{5mm}
+
+\[1 < x_1 < 1.25 ; 1 < x_2 < 1.5\]
+
+\[\frac{\partial f_1}{\partial x_1} = \frac{2x_1}{9} ; \frac{\partial f_1}{\partial x_2} = \frac{8x_2}{9} ;\]
+\[\frac{\partial f_2}{\partial x_1} = -e^{x_1} - 1 ;\frac{\partial f_2}{\partial x_2} = 3 .\]
+\[x_1^{(0)} = x_2^{(0)} = 1 .\]
+
+\pagebreak
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi})}
+\item
+\end{enumerate}
+
+\(\displaystyle J = \begin{pmatrix} 0.2222 & 0.8889\\ -3.7183 & 3\\ \end{pmatrix}; \Delta J = 3.9718 \not= 0\)
+
+\(\displaystyle f_1(1;1) = -0.4444; f_2(1;1) = -0.7183\)
+
+\(\displaystyle F = \begin{pmatrix} -0.4444\\ -0.7183\\ \end{pmatrix}; \parallel F \parallel _1 = 0.7183\)
+
+\[\begin{cases}
+0.2222\Delta x_1 + 0.8889\Delta x_2 + (-0.4444) = 0\\
+-3.7183\Delta x_1 + 3\Delta x_2 + (-0.7183) = 0\\
+\end{cases}\]
+
+\[\Delta x_1^1 = 0.175; \Delta x_2^1 = 0.4562.\]
+\[x_1^1 = x_1^0 + \Delta x_1^1 = 0.175 + 1 = 1.175;  x_2^1 = x_2^0 + \Delta x_2^1 = 0.4562 + 1 = 1.4562.\]
+\[|\Delta x_1|  >  \varepsilon ;|\Delta x_2|  >  \varepsilon ;\parallel F \parallel _1  >  \varepsilon ;\]
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi})}
+\setcounter{enumi}{1}
+\item
+\end{enumerate}
+
+\(\displaystyle J = \begin{pmatrix} 0.2611 & 1.2944\\ -4.2381 & 3\\ \end{pmatrix}; \Delta J = 6.2691 \not= 0\)
+
+\(\displaystyle f_1(1.175;1.4562) = 0.0959; f_2(1.175;1.4562) = -0.0445\)
+
+\(\displaystyle F = \begin{pmatrix} 0.0959\\ -0.0445\\ \end{pmatrix}; \parallel F \parallel _1 = 0.0959\)
+
+\[\begin{cases}
+0.2611\Delta x_1 + 1.2944\Delta x_2 + 0.0959 = 0\\
+-4.2381\Delta x_1 + 3\Delta x_2 + (-0.0445) = 0\\
+\end{cases}\]
+
+\[\Delta x_1^2 = -0.055; \Delta x_2^2 = -0.063.\]
+\[x_1^2 = x_1^1 + \Delta x_1^2 = -0.055 + 1.175 = 1.12;  x_2^2 = x_2^1 + \Delta x_2^2 = -0.063 + 1.4562 = 1.3932.\]
+\[|\Delta x_1|  <  \varepsilon ;|\Delta x_2|  <  \varepsilon ;\parallel F \parallel _1  >  \varepsilon ;\]
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi})}
+\setcounter{enumi}{2}
+\item
+\end{enumerate}
+
+\(\displaystyle J = \begin{pmatrix} 0.2489 & 1.2384\\ -4.0649 & 3\\ \end{pmatrix}; \Delta J = 5.7807 \not= 0\)
+
+\(\displaystyle f_1(1.12;1.3932) = 0.002; f_2(1.12;1.3932) = -0.0053\)
+
+\(\displaystyle F = \begin{pmatrix} 0.002\\ -0.0053\\ \end{pmatrix}; \parallel F \parallel _1 = 0.0053\)
+
+\[\begin{cases}
+0.2489\Delta x_1 + 1.2384\Delta x_2 + 0.002 = 0\\
+-4.0649\Delta x_1 + 3\Delta x_2 + (-0.0053) = 0\\
+\end{cases}\]
+
+\[\Delta x_1^3 = -0.0021; \Delta x_2^3 = -0.0012.\]
+\[x_1^3 = x_1^2 + \Delta x_1^3 = -0.0021 + 1.12 = 1.1179;  x_2^3 = x_2^2 + \Delta x_2^3 = -0.0012 + 1.3932 = 1.392.\]
+\[|\Delta x_1|  <  \varepsilon ;|\Delta x_2|  <  \varepsilon ;\parallel F \parallel _1  <  \varepsilon ;\]
+
+Ответ: \(x_1 = x_1^3 = 1.1179; x_2 = x_2^3 = 1.392\) .
+
+\pagebreak
+
+3.1. Используя таблицу значений Y\textsubscript{i} функции \(y = f(x)\),
+вычисленных в точках X\textsubscript{i}, i = 0,\ldots{},3 построить
+интерполяционные многочлены Лагранжа, проходящие через точки
+{[}Х\textsubscript{i}, Y\textsubscript{i}{]}. Вычислить значение
+погрешности интерполяции в точке X* .
+
+\[f(x) = y = \tan(x) + x\] \[X^{*} = \frac{3\pi}{16}\] \vspace{5mm}
+\renewcommand{\arraystretch}{3}
+
+\begin{center}
+\begin{tabular}{ | l  | l  | l  | l  | l |}
+\hline
+$X_i$ & 0 & $\displaystyle\frac{\pi}{8}$ & $\displaystyle\frac{2\pi}{8}$ & $\displaystyle\frac{3\pi}{8}$ \\ \hline
+$Y_i$ & 0 & 0.8069 & 1.7854 & 3.5923 \\ \hline
+\end{tabular}
+\end{center}\renewcommand{\arraystretch}{1}\vspace{5mm}
+
+Интерполяционный многочлен Лагранжа \(L(x)\) состоит из линейной
+комбинации многочленов \(n\)-ой степени \(L_n(x)\):
+
+\(\displaystyle L_n(x) = \frac{(x - x_0)\dots (x - x_{n-1})}{(x_n - x_0)\dots (x_n - x_{n-1})} ; \;\)
+\(\displaystyle L(x) = \sum_{i=0}^{n} Y_i \cdot L_i(x)\)
+
+\vspace{10mm}
+
+\(\displaystyle L_0(x) = \frac{(x - \frac{\pi}{8}) (x - \frac{2\pi}{8}) (x - \frac{3\pi}{8})}{(-\frac{\pi}{8})(-\frac{2\pi}{8})(-\frac{3\pi}{8})} = \frac{(\frac{\pi ^2}{32}-\frac{3 \pi x}{8}+x^2)(x - \frac{3\pi}{8})}{-\frac{3 \pi ^3}{256}} = \frac{-\frac{3 \pi ^3}{256}+\frac{11 \pi ^2 x}{64}-\frac{3 \pi x^2}{4}+x^3}{-\frac{3 \pi ^3}{256}} = 1-\frac{44 x}{3 \pi }+\frac{64 x^2}{\pi ^2}-\frac{256 x^3}{3 \pi ^3}\)
+
+\(\displaystyle L_1(x) = \frac{(x - 0) (x - \frac{2 \pi}{8}) (x - \frac{3 \pi}{8})}{\frac{\pi}{8} (\frac{\pi}{8} - \frac{2 \pi}{8}) (\frac{\pi}{8} - \frac{3 \pi}{8})} = \frac{\frac{3 \pi ^2 x}{32}-\frac{5 \pi x^2}{8}+x^3}{\frac{\pi ^3}{256}} = \frac{24 x}{\pi }-\frac{160 x^2}{\pi ^2}+\frac{256 x^3}{\pi ^3}\)
+
+\(\displaystyle L_2(x) = \frac{(x - 0)(x - \frac{\pi}{8})(x - \frac{3 \pi}{8})}{\frac{2 \pi}{8}(\frac{2 \pi}{8} - \frac{\pi}{8})(\frac{2 \pi}{8} - \frac{3 \pi}{8})} = \frac{\frac{3 \pi ^2 x}{64}-\frac{\pi x^2}{2}+x^3}{-\frac{\pi ^3}{256}} = -\frac{12 x}{\pi }+\frac{128 x^2}{\pi ^2}-\frac{256 x^3}{\pi ^3}\)
+
+\(\displaystyle L_3(x) = \frac{(x - 0) (x - \frac{\pi}{8}) (x - \frac{2 \pi}{8})}{\frac{3 \pi}{8}(\frac{3 \pi}{8} - \frac{\pi}{8})(\frac{3 Pi}{8} - \frac{2 \pi}{8})} = \frac{\frac{\pi ^2 x}{32}-\frac{3 \pi x^2}{8}+x^3}{\frac{3 \pi ^3}{256}} = \frac{8 x}{3 \pi }-\frac{32 x^2}{\pi ^2}+\frac{256 x^3}{3 \pi ^3}\)
+
+\(\displaystyle L = 0 + 0.8069(\frac{24 x}{\pi }-\frac{160 x^2}{\pi ^2}+\frac{256 x^3}{\pi ^3}) + 1.7854(-\frac{12 x}{\pi }+\frac{128 x^2}{\pi ^2}-\frac{256 x^3}{\pi ^3}) + 3.5923(\frac{8 x}{3 \pi }-\frac{32 x^2}{\pi ^2}+\frac{256 x^3}{3 \pi ^3}) = (6.1643 x-13.081 x^2+6.6621 x^3) + (-6.8197 x+23.1551 x^2-14.741 x^3) + (3.0492 x-11.6472 x^2+9.8865 x^3)\)
+
+\(\displaystyle L = 2.3938 x-1.5731 x^2+1.8076 x^3\)
+
+\vspace{5mm}
+
+\(\displaystyle f(X^{*}) = f(\frac{3\pi}{16}) = 1.2572\)
+
+\(\displaystyle L(X^{*}) = L(\frac{3\pi}{16}) = 1.2337\)
+
+\(\displaystyle \varepsilon(X^{*}) = f(X^{*}) - L(X^{*}) = 1.2572 - 1.2337 = 0.0236.\)
+
+\vspace{10mm}
+
+Ответ: \(L = \underline{1.8076 x^3 - 1.5731 x^2 + 2.3938 x}\),
+\(\varepsilon(X^{*}) = \underline{0.0236}\).
+
+\pagebreak
+
+3.2. Построить кубический сплайн для функции, заданной в узлах
+интерполяции, предполагая, что сплайн имеет нулевую кривизну при x =
+x\textsubscript{0} и x = x\textsubscript{4}. Вычислить значение функции
+в точке x = X* .
+
+\begin{center}
+\begin{tabular}{ | l  | l  | l  | l  | l  | l |}
+\hline
+i & 0 & 1 & 2 & 3 & 4 \\ \hline
+$X_i$ & 0 & 0.9 & 1.8 & 2.7 & 3.6 \\ \hline
+$f_i$ & 0 & 0.72235 & 1.5609 & 2.8459 & 7.7275 \\ \hline
+\end{tabular}
+\end{center}
+
+X* = 1.5; h = 0.9
+
+\vspace{5mm}
+
+Сплайном степени M дефекта r называется M-r раз непрерывна
+деференцируемая функция, которая на каждом отрезке {[}\(x_{i-1};x_i\){]}
+\(i=1,2, \dots 4\) представляет собой многочлен степени M. На каждом
+промежутке \(x \in [x_{i-1};x_i]\) уравнение сплайна имеет вид:
+
+\(\displaystyle S_i(x) = m_i \frac{(x-x_{i-1})^3}{6h_i} + m_{i-1} \frac{(x_i - x)^3}{6h_i} + (y_i - m_i\frac{h_i^2}{6})\frac{x-x_{i-1}}{h_i} + (y_{i-1} - m_{i-1}\frac{h_i^2}{6})\frac{x_i - x}{h_i}\)
+
+Для нахождения коэффициентов сплайнов:
+
+\(\displaystyle m_i = \frac{h}{6}m_{i-1} + \frac{2}{3}h \cdot m_i + \frac{h}{6}m_{i+1} = \frac{y_{i+1} - 2y_i + y_{i-1}}{h}\)
+
+\vspace{5mm}
+
+\[\begin{matrix} i=0\;\\[4pt]  i=1\;\\[3pt] i=2\;\\[4pt] i=3\;\\[4pt] i=4\;\\[1pt] \end{matrix}\begin{cases}
+m_0 = 0\\
+0 + \frac{2}{3} \cdot 0.9m_1 + \frac{0.9}{6}m_2 = \frac{1.5609 \cdot 2 \cdot 0.72235 + 0}{0.9} = 0.129\\
+\frac{0.9}{6}m_1 + \frac{2}{3} \cdot 0.9 m_2 + \frac{0.9}{6}m_3 = \frac{2.8459 - 2 \cdot 1.5609}{0.9} = -0.3066\\
+0.15m_2 + 0.6m_3 = \frac{7.7275 - 2 \cdot 2.8459}{0.9} = 2.2619\\
+m_4 = 0\\
+\end{cases}\] \[\begin{cases}
+m_0 = 0\\
+0 + 0.6m_1 + 0.15m_2 = 0.129\\
+0.15m_1 + 0.6 m_2 + 0.15m_3 = -0.3066\\
+0.15m_2 + 0.6m_3 = 2.2619\\
+m_4 = 0\\
+\end{cases}\]
+
+Решение методом прогонки:
+
+\(\underline{k = 1}: a_1 = 0; b_1 = 0.6; c_1 = 0.15; d_1 = 0.129;\)
+
+\(\displaystyle \mathbf{A_1} = \frac{-c_1}{b_1} = \frac{-0.15}{0.6} = -0.25;\)
+\(\displaystyle \mathbf{B_1} = \frac{d_1}{b_1} = \frac{0.129}{0.6} = 0.215\)
+
+\(\underline{k = 2}: a_2 = 0.15; b_2 = 0.6; c_2 = 0.15; d_2 = -0.3066;\)
+
+\(\displaystyle \mathbf{A_2} = \frac{-c_2}{b_2 + a_2\cdot A_1} = \frac{-0.15}{0.6+0.15\cdot(-0.25)} = -0.2667;\)
+\(\displaystyle \mathbf{B_2} = \frac{d_2 - a_2\cdot B_1}{b_2 + a_2\cdot A_1} = -0.6024\)
+
+\(\underline{k = 3}: a_3 = 0.15; b_3 = 0.6; c_3 = 0; d_3 = 2.2619;\)
+
+\(\displaystyle \mathbf{A_3} = \frac{-c_3}{b_3 + a_3\cdot A_2} = 0;\)
+\(\displaystyle \mathbf{B_3} = \frac{d_3 - a_3\cdot B_2}{b_3 + a_3\cdot A_2} = \frac{2.2619 - 0.15 \cdot (-0.6024)}{0.6 + 0.15 \cdot (-0.2667)} = 4.2005\)
+
+\(\displaystyle \begin{cases} m_4 = 0;\\ m_3 = B_3 = 4.2005;\\ m_2 = A_2 \cdot m_3 + B_2 = -1.7227;\\ m_1 = A_1 \cdot m_2 + B_1 = 0.6457;\\ m_0 = 0 .\\ \end{cases}\)
+
+\pagebreak
+
+\(\displaystyle S_1(x) = 0.6457\cdot\frac{(x-0)^3}{6\cdot0.9} + 0\cdot\frac{(0.9 - x)^3}{6\cdot0.9} + (0.72235 - 0.6457\cdot\frac{0.9^2}{6})\cdot\frac{x-0}{0.9} + (0 - 0\cdot\frac{0.9^2}{6})\cdot\frac{0.9 - x}{0.9} = (0.1196 x^3) + (0) + (0.7058 x) + (0) = 0.1196 x^3+0.7058 x\)
+
+для \(\displaystyle x \in [0, 0.9]\)
+
+\vspace{5mm}
+
+\(\displaystyle S_2(x) = (-1.7227)\cdot\frac{(x-0.9)^3}{6\cdot0.9} + 0.6457\cdot\frac{(1.8 - x)^3}{6\cdot0.9} + (1.5609 - (-1.7227)\cdot\frac{0.9^2}{6})\cdot\frac{x-0.9}{0.9} + (0.72235 - 0.6457\cdot\frac{0.9^2}{6})\cdot\frac{1.8 - x}{0.9} = (-0.3190 x^3+0.8613 x^2-0.7752 x+0.2326) + (-0.1196 x^3+0.6457 x^2-1.162 x+0.6974) + (1.993 x-1.793) + (1.270-0.7058 x) = -0.4386 x^3+1.507 x^2-0.6505 x+0.4068\)
+
+для \(\displaystyle x \in [0.9, 1.8]\)
+
+\vspace{5mm}
+
+\(\displaystyle S_3(x) = 4.2005\cdot\frac{(x-1.8)^3}{6\cdot0.9} + (-1.7227)\cdot\frac{(2.7 - x)^3}{6\cdot0.9} + (2.8459 - 4.2005\cdot\frac{0.9^2}{6})\cdot\frac{x-1.8}{0.9} + (1.5609 - (-1.7227)\cdot\frac{0.9^2}{6})\cdot\frac{2.7 - x}{0.9} = (0.7779 x^3-4.200 x^2+7.561 x-4.537) + (0.3190 x^3-2.584 x^2+6.977 x-6.279) + (2.532 x-4.558) + (5.380-1.993 x) = 1.097 x^3-6.785 x^2+15.08 x-9.993\)
+
+для \(\displaystyle x \in [1.8, 2.7]\)
+
+\vspace{5mm}
+
+\(\displaystyle S_4(x) = 0\cdot\frac{(x-2.7)^3}{6\cdot0.9} + 4.2005\cdot\frac{(3.6 - x)^3}{6\cdot0.9} + (7.7275 - 0\cdot\frac{0.9^2}{6})\cdot\frac{x-2.7}{0.9} + (2.8459 - 4.2005\cdot\frac{0.9^2}{6})\cdot\frac{3.6 - x}{0.9} = (0) + (-0.7779 x^3+8.401 x^2-30.24 x+36.29) + (8.586 x-23.18) + (9.115-2.532 x) = -0.7779 x^3+8.401 x^2-24.19 x+22.23\)
+
+для \(\displaystyle x \in [2.7, 3.6]\)
+
+\vspace{5mm}
+
+\(\displaystyle S(X^{*}) = S_2(X^{*} = 1.5)\)
+
+\(\displaystyle S_2(1.5) = -0.4386\cdot1.5^3+1.507\cdot1.5^2-0.6505\cdot1.5+0.4068 = 1.3415\)
+
+\vspace{5mm}
+
+Ответ:
+\(\displaystyle \begin{cases} S_1 = 0.1196 x^3+0.7058 x\\ S_2 = -0.4386 x^3+1.507 x^2-0.6505 x+0.4068\\ S_3 = 1.097 x^3-6.785 x^2+15.08 x-9.993\\ S_4 = -0.7779 x^3+8.401 x^2-24.19 x+22.23\\ S(X^{*}) = 1.3415\\ \end{cases}\)
+
+\pagebreak
+
+3.3. Для таблично заданной функции путем решения нормальной системы МНК
+найти приближающие многочлены а) 1-ой и б) 2-ой степени. Для каждого из
+приближающих многочленов вычислить сумму квадратов ошибок. Построить
+графики приближаемой функции и приближающих многочленов.
+
+\vspace{5mm}\begin{center}
+\begin{tabular}{ | l  | l  | l  | l  | l  | l  | l |}
+\hline
+$i$ & 0 & 1 & 2 & 3 & 4 & 5 \\ \hline
+$x_i$ & -0.9 & 0 & 0.9 & 1.8 & 2.7 & 3.6 \\ \hline
+$y_i$ & -1.2689 & 0 & 1.2689 & 2.6541 & 4.4856 & 9.9138 \\ \hline
+\end{tabular}
+\end{center}
+
+n = 6
+
+\vspace{5mm}
+
+МНК основан на минимизации суммы квадратов отклонений
+(среднеквадратичной невязке), т.е. если аппроксимирующая функция
+\(P_m(x) = a_m x^m + a_{m-1}x^{m-1} + \dots + a_1x + a_0\) и
+\[S(a_0, a_1, a_2, \dots , a_n) = \sum_{i=0}^n(P_m(x_i)-y_i)^2\] тогда
+\[S_{\text{min}} => \frac{\partial S}{\partial a_0} = 0; \frac{\partial S}{\partial a_1} = 0; \dots \frac{\partial S}{\partial a_m} = 0;\]
+
+Тогда для \[P_2(x) = ax^2 + bx + c\] чтобы
+\[S=\sum_{i=0}^n(ax^2 + bx + c - y_i)^2 = \mathrm{min}\] Для нахождения
+a,b,c получим: \[\begin{array}{l} 
+\frac{\partial S}{\partial a} = \displaystyle\sum_{i=0}^n 2(ax^2 + bx + c - y_i)\cdot x_i^2 = 0\\
+\frac{\partial S}{\partial b} = \displaystyle\sum_{i=0}^n 2(ax^2 + bx + c - y_i)\cdot x_i = 0\\
+\frac{\partial S}{\partial c} = \displaystyle\sum_{i=0}^n 2(ax^2 + bx + c - y_i) = 0\\
+\end{array}\]
+
+Система многочлена второй степени: \[\displaystyle \begin{cases}
+a\cdot\sum_{i=0}^{5} x_i^4 + b\cdot\sum_{i=0}^{5} x_i^3 + c\cdot\sum_{i=0}^{5} x_i^2 = \sum_{i=0}^{5} x_i^2 \cdot y_i\\
+a\cdot\sum_{i=0}^{5} x_i^3 + b\cdot\sum_{i=0}^{5} x_i^2 + c\cdot\sum_{i=0}^{5} x_i = \sum_{i=0}^{5} x_i \cdot y_i\\
+a\cdot\sum_{i=0}^{5} x_i^2 + b\cdot\sum_{i=0}^{5} x_i + c\cdot n = \sum_{i=0}^{5} y_i\\
+\end{cases}\]
+
+\vspace{5mm}
+
+Система многочлена первой степени: \[\displaystyle \begin{cases}
+b\cdot\sum_{i=0}^{5} x_i^2 + c\cdot\sum_{i=0}^{5} x_i = \sum_{i=0}^{5} x_i \cdot y_i\\
+b\cdot\sum_{i=0}^{5} x_i + c\cdot n = \sum_{i=0}^{5} y_i\\
+\end{cases}\]
+
+\vspace{10mm}
+
+\pagebreak
+
+\(\displaystyle \sum_{i=0}^{5} x_i = - 0.9 + 0 + 0.9 + 1.8 + 2.7 + 3.6 = 8.1\)
+
+\(\displaystyle \sum_{i=0}^{5} x_i^2 = - 0.9^2 + 0^2 + 0.9^2 + 1.8^2 + 2.7^2 + 3.6^2 = 0.81 + 0 + 0.81 + 3.24 + 7.29 + 12.96 = 25.11\)
+
+\(\displaystyle \sum_{i=0}^{5} x_i^3 = - 0.9^3 + 0^3 + 0.9^3 + 1.8^3 + 2.7^3 + 3.6^3 = - 0.729 + 0 + 0.729 + 5.832 + 19.683 + 46.656 = 72.171\)
+
+\(\displaystyle \sum_{i=0}^{5} x_i^4 = - 0.9^4 + 0^4 + 0.9^4 + 1.8^4 + 2.7^4 + 3.6^4 = 0.6561 + 0 + 0.6561 + 10.4976 + 53.1441 + 167.9616 = 232.9155\)
+
+\(\displaystyle \sum_{i=0}^{5} y_i = - 1.2689 + 0 + 1.2689 + 2.6541 + 4.4856 + 9.9138 = 17.0535\)
+
+\(\displaystyle \sum_{i=0}^{5} x_i \cdot y_i = (-0.9) \cdot (-1.2689) + 0 \cdot 0 + 0.9 \cdot 1.2689 + 1.8 \cdot 2.6541 + 2.7 \cdot 4.4856 + 3.6 \cdot 9.9138 = 1.142 + 0 + 1.142 + 4.7774 + 12.1111 + 35.6897 = 54.8622\)
+
+\(\displaystyle \sum_{i=0}^{5} x_i^2 \cdot y_i = 0.81 \cdot (-1.2689) + 0 \cdot 0 + 0.81 \cdot 1.2689 + 3.24 \cdot 2.6541 + 7.29 \cdot 4.4856 + 12.96 \cdot 9.9138 = - 1.0278 + 0 + 1.0278 + 8.5993 + 32.7 + 128.4828 = 169.7821\)
+
+\vspace{5mm}
+
+Система многочлена второй степени: \[\begin{cases}
+232.9155a + 72.171b + 25.11c = 169.7821\\
+72.171a + 25.11b + 8.1c = 54.8622\\
+25.11a + 8.1b + 6c = 17.0535\\
+\end{cases}\]
+
+Решение системы многочлена второй степени:
+\(a = 0.5085, b = 0.8725, c = -0.4641\)
+
+Система многочлена первой степени: \[\begin{cases}
+b + 8.1c = 54.8622\\
+b + 6c = 17.0535\\
+\end{cases}\]
+
+Решение системы многочлена первой степени: \(b = 2.2463, c = -0.1904\)
+
+\(\displaystyle P_1(x) = 2.2463x + (-0.1904)\)
+
+\(\displaystyle P_2(x) = 0.5085x^2 + 0.8725x + (-0.4641)\)
+
+\begin{center} 
+ \begin{tikzpicture} 
+   \begin{axis}[  
+     legend style={at={(0.9,0)}, anchor=east}, 
+     xlabel=$x$, 
+     ylabel={$y$}, 
+    grid=major, 
+ width=10cm,height=10cm, 
+ xmin=-1.6, xmax=4.2, 
+ axis x line=center, 
+ axis y line=center 
+   ]  
+     \addplot[style={mark=+}, smooth] {0.5085*x^2 + 0.8725*x -0.464}; \addlegendentry{$f(x) = 0.5085x^2 + 0.8725x - 0.4641$}; 
+     \addplot[style={mark=|}, smooth] {2.2463*x -0.1904}; \addlegendentry{$f(x) = 2.2463x -0.1904$}; 
+     \addplot[style={mark=o, densely dashed, very thick}] coordinates { 
+        (-.9, -1.2689) (0,0) (.9,1.2689) (1.8,2.6541) (2.7,4.4856) (3.6,9.9138) };
+   \addplot[style={mark=o}, only marks] coordinates { 
+        (-.9, -1.2689) (0,0) (.9,1.2689) (1.8,2.6541) (2.7,4.4856) (3.6,9.9138)  };  
+   \end{axis} 
+ \end{tikzpicture} 
+ \end{center}
+
+\(\displaystyle S_1(x) = \sum_{i=0}^{5}(P_1(x_i) - y_i)^2 = ((-2.2121) - (-1.2689))^2 + ((-0.1904) - 0)^2 + (1.8313 - 1.2689)^2 + (3.8529 - 2.6541)^2 + (5.8746 - 4.4856)^2 + (7.8963 - 9.9138)^2 = 0.8896 + 0.0363 + 0.3163 + 1.4371 + 1.9293 + 4.0703 = 8.6789\)
+
+\(\displaystyle S_2(x) = \sum_{i=0}^{5}(P_2(x_i) - y_i)^2 = ((-0.8375) - (-1.2689))^2 + ((-0.4641) - 0)^2 + (0.733 - 1.2689)^2 + (2.7539 - 2.6541)^2 + (5.5986 - 4.4856)^2 + (9.2671 - 9.9138)^2 = 0.1861 + 0.2154 + 0.2872 + 0.01 + 1.2388 + 0.4182 = 2.3556\)
+
+\vspace{5mm}
+
+Ответ:
+\(\displaystyle \begin{array}{l} P_1(x) = 2.2463x + (-0.1904)\\ P_2(x) = 0.5085x^2 + 0.8725x + (-0.4641)\\ S_1(x) = 8.6789\\ S_2(x) = 2.3556\\ \end{array}\)
+
+\pagebreak
+
+3.4. Вычислить первую и вторую производную таблично заданной функции
+\(y_i = f(x_i), i = 0,1,2,3,4\) в точке x=X* .
+
+\vspace{5mm}\begin{center}
+\begin{tabular}{ | l  | l  | l  | l  | l  | l |}
+\hline
+$i$ & 0 & 1 & 2 & 3 & 4 \\ \hline
+$x_i$ & 1 & 2 & 3 & 4 & 5 \\ \hline
+$y_i$ & 1 & 2.6931 & 4.0986 & 5.3863 & 6.6094 \\ \hline
+\end{tabular}
+\end{center}
+
+X* = 3, h = 1
+
+\vspace{5mm}
+
+Если в некоторой точке требуется вычислить производные первого, второго
+и т.д. порядков от дискретно заданной функции, в случае совпадения X* с
+одним из внутренних узлов заданной таблицы используется аппарат
+разложения функций в ряд Тейлора. С этой целью предполагается, что
+заданная таблица является сеточной функцией для некоторой функции
+\(y(x)\), имеющей в точке X* производные до четвертого порядка
+включительно, т.е. что \(y_i = y(x_i)\).
+
+\vspace{5mm}
+
+X* совпадает с одним из внутренних узлов заданной таблицы \((i=2)\),
+поэтому: Первые производные первого порядка точности:
+
+Правая:
+
+\(\displaystyle y_i'(X^*=X_2) = \frac{y_{i+1} - y_i}{h} = \frac{5.3863 - 4.0986}{1} = 1.2877\)
+
+Левая:
+
+\(\displaystyle \bar{y}_i'(X^*=X_2) = \frac{y_{i} - y_{i-1}}{h} = \frac{4.0986 - 2.6931}{1} = 1.4055\)
+
+Центральная:
+
+\(\displaystyle \overset{\circ}{y}_i'(X^*=X_2) = \frac{y_{i+1} - y_{i-1}}{2h} = \frac{5.3863 - 2.6931}{1} = 1.3466\)
+
+Вторая производная второго порядка точности:
+
+\(\displaystyle y_i''(X^*=X_2) = \frac{y_{i+1} - 2y_{i-1} + y_{i}}{h^2} = \frac{5.3863 - 2\cdot 4.0986 + 2.6931}{1} = -0.1178\)
+
+\vspace{5mm}
+
+Ответ:
+\(\displaystyle \begin{array}{l} y_i' = 1.2877\\ \bar{y}_i' = 1.4055\\ \overset{\circ}{y}_i' = 1.3466\\ y_i'' = 0.1178\\ \end{array}\)
+
+\pagebreak
+
+3.5. Вычислить определенный интеграл
+\(\displaystyle \int_{x_0}^{x_k} y\,\mathrm{d}x\), методами
+прямоугольников, трапеции, Симпсона с шагами \(h_1, h_2\). Уточнить
+полученные значения, используя Метод Рунге-Ромберга:
+
+\[y = \frac{1}{x^4 + 16}\]
+
+\(\displaystyle x_0 = 0, x_k = 2, h_1 = 0.5, h_2 = 0.25\)
+
+\vspace{5mm}
+
+Таблица соответствующая шагу h\textsubscript{1}:
+
+\begin{center}
+\begin{tabular}{ | l  | l  | l  | l  | l  | l |}
+\hline
+$i$ & 0 & 1 & 2 & 3 & 4 \\ \hline
+$x_i$ & 0 & 0.5 & 1 & 1.5 & 2 \\ \hline
+$y_i$ & 0.0625 & 0.0623 & 0.0588 & 0.0475 & 0.0313 \\ \hline
+\end{tabular}
+\end{center}
+
+Таблица соответствующая шагу h\textsubscript{2}:
+
+\begin{center}
+\begin{tabular}{ | l  | l  | l  | l  | l  | l  | l  | l  | l  | l |}
+\hline
+$i$ & 0 & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 \\ \hline
+$x_i$ & 0 & 0.25 & 0.5 & 0.75 & 1 & 1.25 & 1.5 & 1.75 & 2 \\ \hline
+$y_i$ & 0.0625 & 0.0625 & 0.0623 & 0.0613 & 0.0588 & 0.0542 & 0.0475 & 0.0394 & 0.0313 \\ \hline
+\end{tabular}
+\end{center}
+
+\vspace{5mm}
+
+Представленные методы численного интегрирования используют определение
+интеграла функции \(f(x)\) как площади фигуры образованной графиком
+подынтегральной функции и осью абсцисс, так метод прямоугольников
+позволяет вычислить искомую площадь как сумму прямоугольников
+образованных отрезками высот проходящих с шагом \(h\). Метод
+Рунге-Ромберга позволяет при наличии нескольких результатов вычислений с
+одинаковой точностью \(P\) получить новый результат с точностью \(P+1\)
+.
+
+Метод прямоугольников:
+
+h\textsubscript{1}:
+\(\displaystyle \int_{x_0}^{x_k} y\,\mathrm{d}x \approx h \cdot \sum_{i=1}^{\mathrm{n}} y_i = 0.5 \cdot (0.0625 + 0.0623 + 0.0588 + 0.0475 + 0.0313) = 0.1312\)
+
+h\textsubscript{2}:
+\(\displaystyle \int_{x_0}^{x_k} y\,\mathrm{d}x \approx h \cdot \sum_{i=1}^{\mathrm{n}} y_i = 0.25 \cdot (0.0625 + 0.0625 + 0.0623 + 0.0613 + 0.0588 + 0.0542 + 0.0475 + 0.0394 + 0.0313) = 0.12\)
+
+\vspace{5mm}
+
+Метод трапеций:
+
+h\textsubscript{1}:
+\(\displaystyle \int_{x_0}^{x_k} y\,\mathrm{d}x \approx \frac{h}{2} \cdot (y(x_0) + 2 \cdot \sum_{i=1}^{\mathrm{n}-1} y_i + y(x_k)) = \frac{0.5}{2} \cdot (0.0625 + 2 \cdot (0.0623 + 0.0588 + 0.0475) + 0.0313 ) = 0.25 \cdot (0.0625 + 2 \cdot 0.1686 + 0.0313 ) = 0.1077\)
+
+h\textsubscript{2}:
+\(\displaystyle \int_{x_0}^{x_k} y\,\mathrm{d}x \approx \frac{h}{2} \cdot (y(x_0) + 2 \cdot \sum_{i=1}^{\mathrm{n}-1} y_i + y(x_k)) = \frac{0.25}{2} \cdot (0.0625 + 2 \cdot (0.0625 + 0.0623 + 0.0613 + 0.0588 + 0.0542 + 0.0475 + 0.0394) + 0.0313 ) = 0.125 \cdot (0.0625 + 2 \cdot 0.386 + 0.0313 ) = 0.1082\)
+
+\vspace{5mm}
+
+Метод Симпсона:
+
+h\textsubscript{1}:
+\(\displaystyle \int_{x_0}^{x_k} y\,\mathrm{d}x \approx \frac{h}{3} \cdot (y(x_0) + 4 \cdot \sum_{i=1,3,5\dots}^{\mathrm{n}-1} y_i + 2 \cdot \sum_{i=2,4,6\dots}^{\mathrm{n}-1} y_i + y(x_k)) = \frac{0.5}{3} \cdot (0.0625 + 4 \cdot (0.0623 + 0.0475) + 2 \cdot (0.0588) + 0.0313 ) = 0.16667 \cdot (0.0625 + 4 \cdot 0.1098 + 2 \cdot 0.0588 + 0.0313 ) = 0.10844\)
+
+h\textsubscript{2}:
+\(\displaystyle \int_{x_0}^{x_k} y\,\mathrm{d}x \approx \frac{h}{3} \cdot (y(x_0) + 4 \cdot \sum_{i=1,3,5\dots}^{\mathrm{n}-1} y_i + 2 \cdot \sum_{i=2,4,6\dots}^{\mathrm{n}-1} y_i + y(x_k)) = \frac{0.25}{3} \cdot (0.0625 + 4 \cdot (0.0625 + 0.0613 + 0.0542 + 0.0394) + 2 \cdot (0.0623 + 0.0588 + 0.0475) + 0.0313 ) = 0.08333 \cdot (0.0625 + 4 \cdot 0.2174 + 2 \cdot 0.1686 + 0.0313 ) = 0.10838\)
+
+\vspace{5mm}
+
+Уточнение метода прямоугольников.
+\(\displaystyle Z_{pp} = z_1 + \frac{z_1 - z_2}{(\frac{h_2}{h_1})^p - 1} = 0.1312 + \frac{0.1312 - 0.12}{(\frac{0.25}{0.5})^1 - 1} = 0.1088\)
+
+Уточнение метода трапеций.
+\(\displaystyle Z_{pp} = z_1 + \frac{z_1 - z_2}{(\frac{h_2}{h_1})^p - 1} = 0.1077 + \frac{0.1077 - 0.1082}{(\frac{0.25}{0.5})^2 - 1} = 0.1084\)
+
+Уточнение метода Симпсона.
+\(\displaystyle Z_{pp} = z_1 + \frac{z_1 - z_2}{(\frac{h_2}{h_1})^p - 1} = 0.10844 + \frac{0.10844 - 0.10838}{(\frac{0.25}{0.5})^4 - 1} = 0.10838\)
+
+\vspace{5mm}
+
+Ответ:
+\(\displaystyle\int_{0}^{2} \left( \frac{1}{x^4 + 16}\right) \,\mathrm{d}x = 0.10838\)
+
+\pagebreak
+
+4.1. Решить задачу Коши для обыкновенного дифференциального уравнения
+1-го порядка на указанном отрезке с заданным шагом h. Полученное
+численное решение сравнить с точным. Определить погрешность решения.
+
+\[\begin{cases}
+y' = - \frac{1y}{2x} + x^2\\
+y(1) = 1\\
+\end{cases}\]
+
+\(\displaystyle x \in [1, 2], h = 0.1\)
+
+Точное решение:
+\(\displaystyle y = \frac{2}{7}x^3 + \frac{5}{7\sqrt{x}}\)
+
+\vspace{5mm}
+
+Выпишем точные значения на заданном промежутке:
+
+\begin{center}
+\begin{tabular}{ | l  | l  | l  | l  | l  | l  | l  | l  | l  | l  | l  | l |}
+\hline
+$i$ & 0 & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 & 10 \\ \hline
+$x_i$ & 1 & 1.1 & 1.2 & 1.3 & 1.4 & 1.5 & 1.6 & 1.7 & 1.8 & 1.9 & 2 \\ \hline
+$y_i$ & 1 & 1.0613 & 1.1458 & 1.2542 & 1.3877 & 1.5475 & 1.735 & 1.9515 & 2.1987 & 2.4779 & 2.7908 \\ \hline
+\end{tabular}
+\end{center}
+
+\vspace{5mm}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\itemsep1pt\parskip0pt\parsep0pt
+\item
+  Метод Эйлера
+\end{enumerate}
+
+Если известно \(y_i =\) значение табличной функции при \(x=x_i\) , то
+можно вычислить новый узел \(x=x_{i+1}\) и соответствующий ему
+\(y_{i+1}\) по формуле: \[y_{i+1} = y_i + h\cdot f(x_i, y_i)\]
+
+\(\displaystyle y_{1} = 1 + 0.1 \cdot f(1, 1) = 1 + 0.1 \cdot 0.5 = 1.05\)
+
+\(\displaystyle y_{2} = 1.05 + 0.1 \cdot f(1.1, 1.05) = 1.05 + 0.1 \cdot 0.7327 = 1.1233\)
+
+\(\displaystyle y_{3} = 1.1233 + 0.1 \cdot f(1.2, 1.1233) = 1.1233 + 0.1 \cdot 0.972 = 1.2205\)
+
+\(\displaystyle y_{4} = 1.2205 + 0.1 \cdot f(1.3, 1.2205) = 1.2205 + 0.1 \cdot 1.2206 = 1.3426\)
+
+\(\displaystyle y_{5} = 1.3426 + 0.1 \cdot f(1.4, 1.3426) = 1.3426 + 0.1 \cdot 1.4805 = 1.4907\)
+
+\(\displaystyle y_{6} = 1.4907 + 0.1 \cdot f(1.5, 1.4907) = 1.4907 + 0.1 \cdot 1.7531 = 1.666\)
+
+\(\displaystyle y_{7} = 1.666 + 0.1 \cdot f(1.6, 1.666) = 1.666 + 0.1 \cdot 2.0394 = 1.8699\)
+
+\(\displaystyle y_{8} = 1.8699 + 0.1 \cdot f(1.7, 1.8699) = 1.8699 + 0.1 \cdot 2.34 = 2.1039\)
+
+\(\displaystyle y_{9} = 2.1039 + 0.1 \cdot f(1.8, 2.1039) = 2.1039 + 0.1 \cdot 2.6556 = 2.3695\)
+
+\(\displaystyle y_{10} = 2.3695 + 0.1 \cdot f(1.9, 2.3695) = 2.3695 + 0.1 \cdot 2.9864 = 2.6681\)
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{1}
+\itemsep1pt\parskip0pt\parsep0pt
+\item
+  Метод Эйлера-Коши
+\end{enumerate}
+
+\[\begin{cases}
+\tilde{y}_{i+1} = y_i + h\cdot f(x_i, y_i)\\
+y_{i+1} = y_i + \frac{h}{2}[f(x_i, y_i) + f(x_{i+1}, \tilde{y}_{i+1})]\\
+\end{cases}\]
+
+\(\displaystyle \begin{cases} \tilde{y}_{1} = 1 + 0.1 \cdot f(1, 1) = 1 + 0.1 \cdot 0.5 = 1.05\\ y_{1} = 1 + (0.1\cdot 0.5) \cdot [f(1, 1) + f(1.1, 1.05)] = 1 + 0.05 \cdot (0.5 + 0.7327) = 1.0616\\ \end{cases}\)
+
+\(\displaystyle \begin{cases} \tilde{y}_{2} = 1.0616 + 0.1 \cdot f(1.1, 1.0616) = 1.0616 + 0.1 \cdot 0.7275 = 1.1344\\ y_{2} = 1.0616 + (0.1\cdot 0.5) \cdot [f(1.1, 1.0616) + f(1.2, 1.1344)] = 1.0616 + 0.05 \cdot (0.7275 + 0.9673) = 1.1463\\ \end{cases}\)
+
+\(\displaystyle \begin{cases} \tilde{y}_{3} = 1.1463 + 0.1 \cdot f(1.2, 1.1463) = 1.1463 + 0.1 \cdot 0.9624 = 1.2425\\ y_{3} = 1.1463 + (0.1\cdot 0.5) \cdot [f(1.2, 1.1463) + f(1.3, 1.2425)] = 1.1463 + 0.05 \cdot (0.9624 + 1.2121) = 1.255\\ \end{cases}\)
+
+\(\displaystyle \begin{cases} \tilde{y}_{4} = 1.255 + 0.1 \cdot f(1.3, 1.255) = 1.255 + 0.1 \cdot 1.2073 = 1.3757\\ y_{4} = 1.255 + (0.1\cdot 0.5) \cdot [f(1.3, 1.255) + f(1.4, 1.3757)] = 1.255 + 0.05 \cdot (1.2073 + 1.4687) = 1.3888\\ \end{cases}\)
+
+\(\displaystyle \begin{cases} \tilde{y}_{5} = 1.3888 + 0.1 \cdot f(1.4, 1.3888) = 1.3888 + 0.1 \cdot 1.464 = 1.5352\\ y_{5} = 1.3888 + (0.1\cdot 0.5) \cdot [f(1.4, 1.3888) + f(1.5, 1.5352)] = 1.3888 + 0.05 \cdot (1.464 + 1.7383) = 1.5489\\ \end{cases}\)
+
+\(\displaystyle \begin{cases} \tilde{y}_{6} = 1.5489 + 0.1 \cdot f(1.5, 1.5489) = 1.5489 + 0.1 \cdot 1.7337 = 1.7223\\ y_{6} = 1.5489 + (0.1\cdot 0.5) \cdot [f(1.5, 1.5489) + f(1.6, 1.7223)] = 1.5489 + 0.05 \cdot (1.7337 + 2.0218) = 1.7367\\ \end{cases}\)
+
+\(\displaystyle \begin{cases} \tilde{y}_{7} = 1.7367 + 0.1 \cdot f(1.6, 1.7367) = 1.7367 + 0.1 \cdot 2.0173 = 1.9384\\ y_{7} = 1.7367 + (0.1\cdot 0.5) \cdot [f(1.6, 1.7367) + f(1.7, 1.9384)] = 1.7367 + 0.05 \cdot (2.0173 + 2.3199) = 1.9536\\ \end{cases}\)
+
+\(\displaystyle \begin{cases} \tilde{y}_{8} = 1.9536 + 0.1 \cdot f(1.7, 1.9536) = 1.9536 + 0.1 \cdot 2.3154 = 2.1851\\ y_{8} = 1.9536 + (0.1\cdot 0.5) \cdot [f(1.7, 1.9536) + f(1.8, 2.1851)] = 1.9536 + 0.05 \cdot (2.3154 + 2.633) = 2.201\\ \end{cases}\)
+
+\(\displaystyle \begin{cases} \tilde{y}_{9} = 2.201 + 0.1 \cdot f(1.8, 2.201) = 2.201 + 0.1 \cdot 2.6286 = 2.4639\\ y_{9} = 2.201 + (0.1\cdot 0.5) \cdot [f(1.8, 2.201) + f(1.9, 2.4639)] = 2.201 + 0.05 \cdot (2.6286 + 2.9616) = 2.4805\\ \end{cases}\)
+
+\(\displaystyle \begin{cases} \tilde{y}_{10} = 2.4805 + 0.1 \cdot f(1.9, 2.4805) = 2.4805 + 0.1 \cdot 2.9572 = 2.7762\\ y_{10} = 2.4805 + (0.1\cdot 0.5) \cdot [f(1.9, 2.4805) + f(2, 2.7762)] = 2.4805 + 0.05 \cdot (2.9572 + 3.306) = 2.7937\\ \end{cases}\)
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{2}
+\itemsep1pt\parskip0pt\parsep0pt
+\item
+  Метод Рунге-Кутта
+\end{enumerate}
+
+\[\begin{cases}
+k_i^1 = h f(x_i, y_i)\\
+k_i^2 = h f(x_{i+\frac{1}{2}}, y_i + \frac{k_i^1}{2})\\
+k_i^3 = h f(x_{i+\frac{1}{2}}, y_i + \frac{k_i^2}{2})\\
+k_i^4 = h f(x_{i+1}, y_i + k_i^3)\\
+\Delta y_i = \frac{1}{6} (k_i^1 + 2k_i^2 + 2k_i^3 + k_i^4)\\
+y_{i+1} = y_i + \Delta y_i\\
+\end{cases}\]
+
+\(\displaystyle \begin{cases} k_{0}^1 = 0.1 \cdot (-1 \cdot \frac{1}{2\times 1} + 1^2) = 0.1\cdot (-0.5 + 1) = 0.1 \cdot 0.5 = 0.05\\ x_{0 + \frac{1}{2}} = 1 + 0.1/2 = 1.05\\ k_{0}^2 = 0.1 \cdot (-1 \cdot \frac{1.025}{2\times 1.05} + 1.05^2) = 0.1\cdot (-0.4881 + 1.1025) = 0.1 \cdot 0.6144 = 0.0614\\ k_{0}^3 = 0.1 \cdot (-1 \cdot \frac{1.0307}{2\times 1.05} + 1.05^2) = 0.1\cdot (-0.4908 + 1.1025) = 0.1 \cdot 0.6117 = 0.0612\\ k_{0}^4 = 0.1 \cdot (-1 \cdot \frac{1.0612}{2\times 1.1} + 1.1^2) = 0.1\cdot (-0.4824 + 1.21) = 0.1 \cdot 0.7276 = 0.0728\\ \Delta y_{0} = \frac{1}{6} \cdot (0.05 + 20.0614 + 20.0612 + 0.0728) = 0.0613\\ y_{1} = 1 + 0.0613 = 1.0613\\ \end{cases}\)
+
+\(\displaystyle \begin{cases} k_{1}^1 = 0.1 \cdot (-1 \cdot \frac{1.0613}{2\times 1.1} + 1.1^2) = 0.1\cdot (-0.4824 + 1.21) = 0.1 \cdot 0.7276 = 0.0728\\ x_{1 + \frac{1}{2}} = 1.1 + 0.1/2 = 1.15\\ k_{1}^2 = 0.1 \cdot (-1 \cdot \frac{1.0977}{2\times 1.15} + 1.15^2) = 0.1\cdot (-0.4773 + 1.3225) = 0.1 \cdot 0.8452 = 0.0845\\ k_{1}^3 = 0.1 \cdot (-1 \cdot \frac{1.1035}{2\times 1.15} + 1.15^2) = 0.1\cdot (-0.4798 + 1.3225) = 0.1 \cdot 0.8427 = 0.0843\\ k_{1}^4 = 0.1 \cdot (-1 \cdot \frac{1.1456}{2\times 1.2} + 1.2^2) = 0.1\cdot (-0.4773 + 1.44) = 0.1 \cdot 0.9627 = 0.0963\\ \Delta y_{1} = \frac{1}{6} \cdot (0.0728 + 20.0845 + 20.0843 + 0.0963) = 0.0845\\ y_{2} = 1.0613 + 0.0845 = 1.1458\\ \end{cases}\)
+
+\(\displaystyle \begin{cases} k_{2}^1 = 0.1 \cdot (-1 \cdot \frac{1.1458}{2\times 1.2} + 1.2^2) = 0.1\cdot (-0.4774 + 1.44) = 0.1 \cdot 0.9626 = 0.0963\\ x_{2 + \frac{1}{2}} = 1.2 + 0.1/2 = 1.25\\ k_{2}^2 = 0.1 \cdot (-1 \cdot \frac{1.1939}{2\times 1.25} + 1.25^2) = 0.1\cdot (-0.4776 + 1.5625) = 0.1 \cdot 1.0849 = 0.1085\\ k_{2}^3 = 0.1 \cdot (-1 \cdot \frac{1.2}{2\times 1.25} + 1.25^2) = 0.1\cdot (-0.48 + 1.5625) = 0.1 \cdot 1.0825 = 0.1083\\ k_{2}^4 = 0.1 \cdot (-1 \cdot \frac{1.2541}{2\times 1.3} + 1.3^2) = 0.1\cdot (-0.4823 + 1.69) = 0.1 \cdot 1.2077 = 0.1208\\ \Delta y_{2} = \frac{1}{6} \cdot (0.0963 + 20.1085 + 20.1083 + 0.1208) = 0.1085\\ y_{3} = 1.1458 + 0.1085 = 1.2543\\ \end{cases}\)
+
+\(\displaystyle \vdots\)
+
+\vspace{5mm}
+
+Продолжим вычисления, результаты выпишем в таблицу:
+
+\begin{center}
+\begin{tabular}{ | l  | l  | l  | l  | l  | l  | l  | l  | l  | l  | l  | l |}
+\hline
+$i$ & 0 & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 & 10 \\ \hline
+$x_i$ & 1 & 1.1 & 1.2 & 1.3 & 1.4 & 1.5 & 1.6 & 1.7 & 1.8 & 1.9 & 2 \\ \hline
+$y_i$ & 1 & 1.0613 & 1.1458 & 1.2543 & 1.3878 & 1.5476 & 1.7351 & 1.9517 & 2.1989 & 2.4782 & 2.7911 \\ \hline
+$k^1_{i+1}$ &  & 0.05 & 0.0728 & 0.0963 & 0.1208 & 0.1464 & 0.1734 & 0.2018 & 0.2316 & 0.2629 & 0.2958 \\ \hline
+$k^2_{i+1}$ &  & 0.0614 & 0.0845 & 0.1085 & 0.1336 & 0.1599 & 0.1875 & 0.2166 & 0.2472 & 0.2793 & 0.3129 \\ \hline
+$k^3_{i+1}$ &  & 0.0612 & 0.0843 & 0.1083 & 0.1333 & 0.1596 & 0.1873 & 0.2164 & 0.247 & 0.279 & 0.3127 \\ \hline
+$k^4_{i+1}$ &  & 0.0728 & 0.0963 & 0.1208 & 0.1464 & 0.1734 & 0.2018 & 0.2316 & 0.2629 & 0.2958 & 0.3302 \\ \hline
+$\Delta y_{i+1}$ &  & 0.0613 & 0.0845 & 0.1085 & 0.1335 & 0.1598 & 0.1875 & 0.2166 & 0.2472 & 0.2793 & 0.3129 \\ \hline
+\end{tabular}
+\end{center}
+
+\vspace{5mm}
+
+Сравним графически результаты методов:
+
+\begin{center} 
+ \begin{tikzpicture} 
+   \begin{axis}[  
+     legend style={at={(0.1,0.5)}, anchor=west}, 
+     xlabel=$x$, 
+     ylabel={$y$}, 
+    grid=major, 
+ width=15cm,height=10cm, 
+ axis x line=center, 
+ axis y line=center 
+   ]  
+     \addplot[style={mark=x},every mark/.append style={scale=4}] coordinates { 
+ (1,1) (1.1,1.0613) (1.2,1.1458) (1.3,1.2542) (1.4,1.3877) (1.5,1.5475) (1.6,1.735) (1.7,1.9515) (1.8,2.1987) (1.9,2.4779) (2,2.7908)  
+  };\addlegendentry{Точные значения}; 
+     \addplot coordinates { 
+ (1,1) (1.1,1.05) (1.2,1.1233) (1.3,1.2205) (1.4,1.3426) (1.5,1.4907) (1.6,1.666) (1.7,1.8699) (1.8,2.1039) (1.9,2.3695) (2,2.6681)  
+  };\addlegendentry{Метод Эйлера}; 
+     \addplot[style={mark=triangle},every mark/.append style={scale=1}]  coordinates { 
+ (1,1) (1.1,1.0616) (1.2,1.1463) (1.3,1.255) (1.4,1.3888) (1.5,1.5489) (1.6,1.7367) (1.7,1.9536) (1.8,2.201) (1.9,2.4805) (2,2.7937)  
+  };\addlegendentry{Метод Эйлера-Коши}; 
+     \addplot[style={mark=square},every mark/.append style={scale=1}]  coordinates { 
+ (1,1) (1.1,1.0613) (1.2,1.1458) (1.3,1.2543) (1.4,1.3878) (1.5,1.5476) (1.6,1.7351) (1.7,1.9517) (1.8,2.1989) (1.9,2.4782) (2,2.7911)  
+  };\addlegendentry{Метод Рунге-Кутта}; 
+   \end{axis} 
+ \end{tikzpicture} 
+ \end{center}
+
+\pagebreak
+
+Определим погрешность:
+
+\(\displaystyle \varepsilon_{\text{Эйлера}} = \parallel \overline{y} - \overline{y}_{\text{Эйлера}} \parallel _1 = \begin{Vmatrix} \begin{pmatrix} 1\\ 1.0613\\ 1.1458\\ 1.2542\\ 1.3877\\ 1.5475\\ 1.735\\ 1.9515\\ 2.1987\\ 2.4779\\ 2.7908\\ \end{pmatrix} - \begin{pmatrix} 1\\ 1.05\\ 1.1233\\ 1.2205\\ 1.3426\\ 1.4907\\ 1.666\\ 1.8699\\ 2.1039\\ 2.3695\\ 2.6681\\ \end{pmatrix} \end{Vmatrix} _1 = \begin{Vmatrix} \begin{pmatrix} 0\\ 0.0113\\ 0.0225\\ 0.0337\\ 0.0451\\ 0.0568\\ 0.069\\ 0.0816\\ 0.0948\\ 0.1084\\ 0.1227\\ \end{pmatrix}\end{Vmatrix} _1 = 0.1227\)
+
+\(\displaystyle \varepsilon_{\text{Эйлера-Коши}} = \parallel \overline{y} - \overline{y}_{\text{Эйлера-Коши}} \parallel _1 = \begin{Vmatrix} \begin{pmatrix} 1\\ 1.0613\\ 1.1458\\ 1.2542\\ 1.3877\\ 1.5475\\ 1.735\\ 1.9515\\ 2.1987\\ 2.4779\\ 2.7908\\ \end{pmatrix} - \begin{pmatrix} 1\\ 1.0616\\ 1.1463\\ 1.255\\ 1.3888\\ 1.5489\\ 1.7367\\ 1.9536\\ 2.201\\ 2.4805\\ 2.7937\\ \end{pmatrix} \end{Vmatrix} _1 = \begin{Vmatrix} \begin{pmatrix} 0\\ -0.0003\\ -0.0005\\ -0.0008\\ -0.0011\\ -0.0014\\ -0.0017\\ -0.0021\\ -0.0023\\ -0.0026\\ -0.0029\\ \end{pmatrix}\end{Vmatrix} _1 = 0.0029\)
+
+\(\displaystyle \varepsilon_{\text{Рунге-Кутта}} = \parallel \overline{y} - \overline{y}_{\text{Рунге-Кутта}} \parallel _1 = \begin{Vmatrix} \begin{pmatrix} 1\\ 1.0613\\ 1.1458\\ 1.2542\\ 1.3877\\ 1.5475\\ 1.735\\ 1.9515\\ 2.1987\\ 2.4779\\ 2.7908\\ \end{pmatrix} - \begin{pmatrix} 1\\ 1.0613\\ 1.1458\\ 1.2543\\ 1.3878\\ 1.5476\\ 1.7351\\ 1.9517\\ 2.1989\\ 2.4782\\ 2.7911\\ \end{pmatrix} \end{Vmatrix} _1 = \begin{Vmatrix} \begin{pmatrix} 0\\ 0\\ 0\\ -0.0001\\ -0.0001\\ -0.0001\\ -0.0001\\ -0.0002\\ -0.0002\\ -0.0003\\ -0.0003\\ \end{pmatrix}\end{Vmatrix} _1 = 0.0003\)
+
+\vspace{5mm}
+
+Ответ:
+\(\varepsilon_{\text{Эйлера}} = 0.1227, \varepsilon_{\text{Эйлера-Коши}} = 0.0029, \varepsilon_{\text{Рунге-Кутта}} = 0.0003\)
+
+\pagebreak
+
+\end{document}
